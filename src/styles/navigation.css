@@ -1,0 +1,173 @@
+@media screen {
+
+  .turf-navigation {
+    height: auto;
+    width: 100%;
+    min-width: 124px;
+    color: white;
+  }
+
+  .turf-nav-menus {
+    background-color: #ffffff;
+    border: none;
+    margin-left: 5%;
+    margin-top: 0.25em;
+    text-align: left;
+    width: 95%;
+  }
+
+  .turf-active-nav-menu,
+  .turf-inactive-nav-menu,
+  .turf-nav-menu {
+    background-color: #ffffff;
+    margin: none;
+    padding: none ;
+    width: 100%;
+  }
+
+  .turf-inactive-menu-title,
+  .turf-nav-menu-title,
+  .turf-nav-weather {
+    background-color: #ffffff;
+    /* border: 1px solid #81c343; */
+    /* color: #81c343; */
+    border: 1px solid #00aa00;
+    color: #00aa00;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 10px;
+    text-align: left;
+  }
+  .turf-inactive-menu-title:hover,
+  .turf-nav-menu-title:hover,
+  .turf-nav-weather:hover { color: #637b35;  }
+
+  .turf-active-menu-title {
+    background-color: #00aa00;
+    border: 1px solid #00aa00;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 10px;
+    text-align: left;
+  }
+
+  .turf-nav-items { margin-left: 5%; width: 95%; }
+
+  .turf-nav-button {
+    width: 100%;
+    background-color: #ffffff;
+    /* color: #81c343; */
+    color: #00aa00;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px;
+    text-align: left;
+  }
+  .turf-nav-button:hover { color: #637b35; }
+  .turf-nav-button,
+  .turf-nav-link {
+    /* border: 1px solid #81c343; */
+    border: 1px solid #00aa00;
+    border-top: none;
+    /* color: #81c343; */
+    color: #00aa00;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: left;
+    padding: 5px;
+    text-align: left;
+  }
+
+  #turf-irrigation a:link,
+  #turf-temperature a:link,
+  #turf-radar a:link,
+  #turf-useful-links a:link,
+  #turf-nav-weather a:link { color: #00aa00; }
+  /* #turf-nav-weather a:link { color: #81c343; } */
+
+  #turf-irrigation a:visited,
+  #turf-temperature a:visited,
+  #turf-radar a:visited,
+  #turf-useful-links a:visited,
+  #turf-nav-weather a:link { color: #00aa00; }
+  /* #turf-nav-weather a:link { color: #81c343; } */
+
+  #turf-irrigation a:hover,
+  #turf-temperature a:hover,
+  #turf-radar a:hover,
+  #turf-useful-links a:hover,
+  #turf-nav-weather a:hover { color: #637b35; }
+
+  #turf-irrigation a:active,
+  #turf-temperature a:active,
+  #turf-radar a:active,
+  #turf-useful-links a:active,
+  #turf-nav-weather a:hover { color: #637b35; }
+
+  #turf-shortcutt-content {
+    background-color: #ffffff;
+    /* color: #637b35; */
+    color: #00aa00;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 6px;
+    margin-top: 2em;
+    padding-left: 8px;
+    text-align: left;
+    width: 100%;
+  }
+  #turf-shortcutt-content img { width: 100%; max-width: 200px }
+  #turf-shortcutt-content p { margin: 5px; }
+
+}
+
+@media only screen and (max-width: 980px) {
+  .turf-nav-menu-title, .turf-nav-weather { font-size: 14px; }
+  .turf-nav-button, .turf-nav-link { font-size: 12px; }
+}
+
+@media only screen and (max-width: 720px) {
+  .turf-navigation { padding: none; }
+
+  .turf-nav-menus {
+    margin: 0 auto;
+    width: 200px;
+  }
+  .turf-nav-menu,
+  .turf-nav-button {
+    text-align: center;
+  }
+
+  #turf-temperature div,
+  #turf-irrigation div,
+  #turf-radar div,
+  #turf-useful-links div {
+    font-size: 12px;
+    margin-top: 6px;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-bottom: 0;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .turf-nav-menu { font-size: 15px; }
+  .turf-nav-button { font-size: 12px; }
+  #turf-nav-weather { font-size: 15px; }
+
+  #turf-shortcutt-content {
+    margin: none;
+    text-align: center;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #turf-shortcutt-content img {
+    max-height: 42px;
+  }
+
+}

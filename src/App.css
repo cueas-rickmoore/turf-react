@@ -1,0 +1,73 @@
+@media screen {
+  body {
+    max-width: 1020px;
+    min-width: 380px;
+  }
+
+  .App {
+    text-align: center;
+    background-color: #fffff;
+    max-width: 1000px;
+  }
+
+  .App-header {
+    height: 100px;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 16px;
+    color: white;
+  }
+
+  .App-banner {
+    /*animation: App-logo-spin infinite 20s linear;*/
+    height: 80px;
+    width: 100%;
+    margin:0;
+    text-align: center;
+  }
+
+  .App-title {
+    /* font-size: 1.5em; */
+    width: 100%;
+    margin-top: 10px;
+    color: #00aa00;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  #App-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    height: auto;
+    max-width: 1000px;
+    margin: 5px;
+    padding-bottom: 5px;
+    border: none;
+    overflow: hidden;
+  }
+
+  #content-pane {
+    width: 75%;
+    height: auto;
+    /* min-width: 360px; */
+    text-align: center;
+    vertical-align: top;
+  }
+
+  #navigation-pane {
+    height: auto;
+    width: 20%;
+    min-width: 136px;
+    /* display: inline-block; */
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  /* .App-header { width: 100%; max-width: 420px; }
+  #content-pane { width: 100%; max-width: 360px; }
+  #navigation-pane { width: 100%; max-width: 360px; } */
+  #content-pane { width: 97%; }
+  #navigation-pane { width: 100%; }
+}

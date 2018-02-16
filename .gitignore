@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+*.rev
+*.swp
+*.*~
+diff.txt
+*.diff

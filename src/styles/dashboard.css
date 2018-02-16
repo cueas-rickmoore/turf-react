@@ -1,0 +1,344 @@
+@media screen {
+
+  g.highcharts-button.button-normal rect.button-box { margin-left: 5px; }
+  g.highcharts-button.button-pressed rect.button-box { margin-left: 5px; }
+
+  .highcharts-point.zone-1 { fill: #00aa00; }
+  .highcharts-point.zone-2 { fill: #ffd700; }
+  .highcharts-point.zone-3 { fill: #ff0000; }
+
+  span.early,
+  span.high { color: #ff0000; font-weight: bold; }
+  span.late { color: #aaaaaa; font-weight: bold; }
+  span.favorable,
+  span.ideal,
+  span.no_risk { color: #00aa00; font-weight: bold; }
+  span.marginal,
+  span.moderate { color: #ffd700; font-weight: bold; }
+  
+
+  /* dashboard containers */
+  #turf-dashboard {
+    width: 100%;
+    max-width: 800px;
+    height: auto; margin: auto;
+    padding-left: 20px;
+    -webkit-transition: width all 1s linear;
+    -moz-transition: width 1s linear;
+    transition: width 1s linear;
+  }
+
+  #turf-dashboard-location {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  #turf-dashboard-location .location-address { padding-top: 12px; }
+  #turf-dashboard-location .location-coordinates { padding-left: 5px; color: #45930b; }
+
+  .dashboard-change-location {
+     height: 24px;
+     line-height: 18px;
+     padding: 2px 5px;
+     margin-bottom: 0;
+     margin-left: 10px;
+     font-size: 16px;
+     color: #000000;
+     background-color: #33ffff;
+     border: 2px solid #0000ff;
+     vertical-align: middle;
+     box-shadow: none;
+     width: auto;
+     /* background-color: #81c343; */
+     background-color: #00aa00;
+     transition: background-color 0.24s ease-in-out;
+  }
+  .dashboard-change-location:hover {
+     background-color: #555F06;
+     color: #81c343;
+  }
+
+  .dashboard-title {
+     width: 100%;
+     padding-top: 5px;
+     padding-bottom: 5px;
+     font-size: 20px;
+     font-weight: bold;
+     text-align: center;
+     vertical-align: middle;
+  }
+
+  #turf-dashboard-elements { 
+     width: 100%; 
+     height: auto; 
+     margin-top: 0; 
+     margin-bottom:0.5em; 
+     text-align: center;
+     vertical-align: middle;
+  } 
+  #turf-dashboard,
+  #turf-dashboard-location,
+  #turf-dashboard-footer { padding-right: 5px; }
+  
+  .turf-dashboard-table {
+     width: 100%;
+     height: auto;
+     margin: 0;
+     padding: 0;
+  }
+
+  .turf-dashboard-element {
+     width: 100%;
+     max-width:680px;
+     height: auto;
+     margin: auto; 
+     margin-bottom: 5px;
+     background-color: #ffffff;
+     /* border: 2px solid #000000; */
+  }
+
+  .dashboard-description {
+     display: inline;
+     width: 80%;
+     font-size: 16px;
+     color: #000000;
+     text-align: justify;
+     margin-left: 10%;
+  }
+  .dashboard-description h3 { 
+      font-size: 16px;
+      text-align: left;
+  }
+
+  .dashboard-element-header {
+     width: 100%;
+     margin-top: 5px;
+     margin-bottom: 5px;
+  }
+
+  .dashboard-element-legend {
+     display: inline-block;
+     font-size: 16px;
+     font-weight: normal; 
+     margin-left: 5px;
+  }
+  .legend-circle { 
+     display: inline-block;
+     width: 14px;
+     height: 14px;
+     border-radius: 7px;
+     margin-left: 5px;
+     margin-right: 5px;
+  }
+  .legend-circle.late { background-color: #aaaaaa; }
+  .legend-circle.favorable,
+  .legend-circle.ideal,
+  .legend-circle.no_risk { background-color: #00aa00; }
+  .legend-circle.early,
+  .legend-circle.high { background-color: #ff0000; }
+  .legend-circle.marginal,
+  .legend-circle.moderate { background-color: #ffd700; }
+
+  .turf-dashboard-chart {
+    width: 99%;
+    max-width:680px;
+    height: auto;
+    margin: auto;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+  }
+
+  .turf-dashboard-thumbnails {
+    display: flex;
+    flex-direction: row;
+    flex: 0 1 length;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+  div.thumb {
+    width: 12.5%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  img.thumbnail {
+    width: 100%;
+    height: auto;
+    border: 1px solid #000000;
+    background-color: #eeeeee;
+  }
+  span.thumbnail-date {
+    width: 14%;
+    height: auto;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 12px;
+    border: none;
+  }
+
+/* series */
+/* data series */
+  #daily-data,
+  #average-data,
+  #dashboard-dates { height: 33%; }
+
+  th.series-name {
+    width: 14%;
+    text-align: right;
+    vertical-align: middle;
+    font-size: 15px;
+    font-weight: normal;
+    padding-right: 5px;
+    border: 1px solid #000000;
+    border-right: none;
+    -webkit-transition: width 1s linear;
+    -moz-transition: width 1s linear;
+    transition: width 1s linear;
+  }
+  th.series-name.data { border-bottom: none; }
+  td.series-data { width: 100%; max-width: 650px; }
+  td span.data {
+    float: left;
+    width: 9.5%;
+    background-color: #ffffff;
+    margin: auto;
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000000;
+  }
+  td span.data { background-color: #ffffff; }
+  td span.data.late { background-color: #aaaaaa; }
+  td span.data.favorable,
+  td span.data.ideal,
+  td span.data.no_risk { background-color: #00aa00; }
+  td span.data.early,
+  td span.data.high { background-color: #ff0000; }
+  td span.data.marginal,
+  td span.data.moderate { background-color: #ffd700; }
+  /* CSS sibling combinator to get blue left border on first fcast day */
+  td > span.data.fcast { border-left: 4px solid #0000ff; }
+  td > span.data.fcast ~ span.data.fcast { border-left: 1px solid #000000; }
+  
+/* date series */
+  td span.date {
+    float: left;
+    width: 9.5%;
+    background-color: #ffffff;
+    margin: auto;
+    border: 1px solid #000000;
+    border-right: none;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-transition: width 1s linear;
+    -moz-transition: width 1s linear;
+    transition: width 1s linear;
+  }
+  td span.date.obs { background-color: #ccffcc; }
+  td span.date.fcast { background-color: #cceeff; }
+  /* CSS sibling combinator to get blue left border on first fcast day */
+  td > span.date.fcast { border-left: 4px solid #0000ff; }
+  td > span.date.fcast ~ span.date.fcast { border-left: 1px solid #000000; }
+  /* CSS last child to draw the right border on last span */
+  td span:last-child { border-right: 1px solid #000000; }
+}
+
+/* sizing */
+@media only screen and (max-width: 800px) { 
+  th.series-name {  font-size: 15px; }
+}
+@media only screen and (max-width: 780px) {
+  th.series-name { font-size: 14px; }
+  td span.date { font-size: 13px; }
+  .dashboard-description { font-size: 14px; }
+}
+@media only screen and (max-width: 722px) {
+  .dashboard-description { display: inline; }
+}
+@media only screen and (max-width: 720px) {
+  .dashboard-description { display: none; }
+}
+@media only screen and (max-width: 710px) {
+  button.threat-location { width: 26em; font-size: 16px; }
+  button.disease-map { width: 8.5em; font-size: 16px; }
+  th.series-name { font-size: 13px; }
+     display: inline;
+}
+@media only screen and (max-width: 670px) {
+  #turf-page-title { font-size: 26px; }
+  #turf-dashboard-location { font-size: 22px; }
+  .turf-dashboard-element { margin-bottom: 3px; }
+
+  .dashboard-element-name {
+    font-size: 16px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+  }
+  .dashboard-element-legend { font-size: 12px; }
+  .legend-circle {
+    width: 11px;
+    height: 11px;
+    border-radius: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+  th.series-name { font-size: 12px; }
+  td span.date { font-size: 12px; }
+}
+@media only screen and (max-width: 650px) {
+}
+@media only screen and (max-width: 620px) {
+  #turf-dashboard { padding-left: 5px; }
+  button.threat-location { width: 24em; font-size: 14px; }
+  button.disease-map { width: 8em; font-size: 14px; }
+  th.series-name { font-size: 11px; }
+  span.thumbnail-date { font-size: 12px; }
+  .dashboard-description { font-size: 12px; }
+}
+
+@media only screen and (max-width: 580px) {
+  th.series-name { font-size: 10px; }
+}
+@media only screen and (max-width: 560px) {
+  #turf-page-title { font-size: 24px; }
+  #turf-dashboard-location { font-size: 18px; }
+  .dashboard-element { margin-bottom: 2px; }
+  .dashboard-element-name {
+    font-size: 14px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+  .dashboard-element-legend { font-size: 10px; }
+  .legend-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  th.series-name { font-size: 9px; }
+  td span.date { font-size: 10px; }
+  span.thumbnail-date { font-size: 10px; }
+}
+@media only screen and (max-width: 520px) {
+  button.threat-location { width: 22em; font-size: 12px; }
+  button.disease-map { width: 8em; font-size: 12px; }
+  th.series-name { font-size: 8px; }
+}
+@media only screen and (max-width: 480px) {
+  #turf-page-title { font-size: 18px; }
+  #turf-dashboard-location { font-size: 15px; }
+  th.series-name { font-size: 8px; }
+}
+@media only screen and (max-width: 450px) {
+  th.series-name { font-size: 7px; }
+}
+@media only screen and (max-width: 400px) {
+  th.series-name { font-size: 6px; }
+  td span.date { font-size: 9px; }
+}
