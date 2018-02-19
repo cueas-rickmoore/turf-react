@@ -16,6 +16,25 @@
   span.marginal,
   span.moderate { color: #ffd700; font-weight: bold; }
   
+  #turf-unsupported-content {
+    border: 5px solid #dd0000;
+    background-color: #eeeeee;
+    color: #dd0000;
+    /* display: table-cell; */
+    font-size: 28px;
+    font-weight: bold;
+    height: 250px;
+    margin: 25px;
+    max-width: 760px;
+    width: 90%;
+  }
+  .turf-content-warning {
+    position: relative;
+    float: left;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   /* dashboard containers */
   #turf-dashboard {
@@ -50,8 +69,8 @@
      margin-left: 10px;
      font-size: 16px;
      color: #000000;
-     background-color: #33ffff;
-     border: 2px solid #0000ff;
+     border: 2px solid #000000;
+     -radius: 5px;
      vertical-align: middle;
      box-shadow: none;
      width: auto;
@@ -145,9 +164,9 @@
   .legend-circle.marginal,
   .legend-circle.moderate { background-color: #ffd700; }
 
-  .turf-dashboard-chart {
+  #dashboard-chart-container {
     width: 99%;
-    max-width:680px;
+    max-width: 680px;
     height: auto;
     margin: auto;
     margin-bottom: 5px;

@@ -62,6 +62,62 @@
     min-width: 136px;
     /* display: inline-block; */
   }
+
+  #nrcc-footer {
+    background: #d1dce0;
+    font-size: 14px;
+    padding: 0;
+    max-width: 1000px;
+    margin: 0;
+    width: 100%;
+  }
+
+  #nrcc-footer-main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  #nrcc-footer-left {
+    padding-right: 3.12%;
+    width: 40%;
+  }
+
+  #nrcc-footer-left .nrcc-contact {
+    font-weight: bold;
+  }
+
+  #nrcc-footer-right {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 60%;
+  }
+
+  #nrcc-footer-right .logo-1,
+  #nrcc-footer-right .logo-2,
+  #nrcc-footer-right .logo-3 {
+    max-width: 50%;
+    margin-top: 15%;
+    vertical-align: middle;
+  }
+
+  #nrcc-footer-right .logo-2,
+  #nrcc-footer-right .logo-3 {
+    margin-left: 5%;
+  }
+
+  #nrcc-footer-right .logo-1 img,
+  #nrcc-footer-right .logo-2 img,
+  #nrcc-footer-right .logo-3 img {
+    max-height: 60%;
+    object-fit: contain;
+  }
+
+  #nrcc-footer .copyright {
+    padding-bottom: 10px;
+  }
+
 }
 
 @media only screen and (max-width: 720px) {

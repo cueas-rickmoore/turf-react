@@ -1,14 +1,15 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-@inject("store")
+@inject("stores")
 @observer
 class DashboardDescription extends React.Component {
 
-  description() { return { __html: this.props.store.text.description() }; }
+  description(model_name) { return { __html: this.props.stores.text.description(model_name) }; }
 
   render() {
-    return (<div className="dashboard-description" dangerouslySetInnerHTML={this.description()} />)
+    let model_name = this.props.stores.modeldata.model_name;
+    return (<div className="dashboard-description" dangerouslySetInnerHTML={this.description(model_name)} />)
   }
 }
 

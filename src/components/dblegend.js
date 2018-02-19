@@ -1,12 +1,12 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-@inject("store")
+@inject("stores")
 @observer
 class DashboardLegend extends React.Component {
 
   render() {
-    let table = this.props.store.model.dbtable;
+    let table = this.props.stores.model.dbtable;
 
     return (
       <div className="dashboard-element-legend">

@@ -9,10 +9,9 @@ import DashboardTable from '../components/dbtable';
 import DashboardThumbnails from '../components/dbthumbs';
 import DashboardTitle from '../components/dbtitle';
 
-@inject("store")
+@inject("stores")
 @observer
-class TurfDashboardComponent extends React.Component {
-
+class TurfDashboard extends React.Component {
   render() {
     return (
       <div id="turf-dashboard">
@@ -29,7 +28,8 @@ class TurfDashboardComponent extends React.Component {
       </div>
     )
   }
-
 }
 
-export default TurfDashboardComponent;
+export default TurfDashboard;
+
+

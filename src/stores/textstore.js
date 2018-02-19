@@ -37,6 +37,6 @@ export default class TurfTextStore {
     }
 
   }
-  description = () => { return this.descriptions[this.app.model.data_model.name] }
+  description = (model_name) => { return this.descriptions[model_name] }
 }
 

@@ -15,20 +15,21 @@ class InactiveMenuTitle extends React.Component {
   }
 }
 
-@inject("store") @observer
+@inject("stores")
+@observer
 class DiseaseRiskMenu extends React.Component {
 
-  clickHandler(data_keys) { this.props.store.turf.updatePageType(data_keys) }
+  clickHandler(data_keys) { this.props.stores.updateContentPane(data_keys) }
 
   render() {
     return (
       <div clasName="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-diseases" className="turf-nav-items">
-          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, ("dashboard","anthrac"))}>Anthracnose</button>
-          <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, ("dashboard","bpatch"))}>Brown Patch</button>
-          <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, ("dashboard","dspot"))}>Dollarspot</button>
-          <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, ("dashboard","pblight"))}>Pythium Blight</button>
+          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","anthrac"])}>Anthracnose</button>
+          <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","bpatch"])}>Brown Patch</button>
+          <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","dspot"])}>Dollarspot</button>
+          <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","pblight"])}>Pythium Blight</button>
         </div>
       </div>
       );
@@ -36,18 +37,19 @@ class DiseaseRiskMenu extends React.Component {
 }
 
 
-@inject("store") @observer
+@inject("stores")
+@observer
 class TurfDevelopmentMenu extends React.Component {
 
-  clickHandler(data_keys) { this.props.store.turf.updatePageType(data_keys) }
+  clickHandler(data_keys) { this.props.stores.turf.updatePageType(data_keys) }
 
   render() {
     return (
       <div clasName="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-development" className="turf-nav-items">
-          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, ("dashboard","seedhead"))}>Seedhead Recommendations</button>
-          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, ("dashboard","dandelion"))}>Dandelion Recommendations</button>
+          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","seedhead"])}>Seedhead Recommendations</button>
+          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","dandelion"])}>Dandelion Recommendations</button>
         </div>
       </div>
       );
@@ -87,7 +89,6 @@ class TurfTemperatureMenu extends React.Component {
     }
 }
 
-@inject("store") @observer
 class TurfUsefulLinksMenu extends React.Component {
   render() {
     return (
@@ -134,7 +135,8 @@ class TurfRadarMenu extends React.Component {
     }
 }
 
-@inject("store") @observer
+@inject("stores")
+@observer
 class TurfNavigation extends React.Component {
   constructor(props) {
     super(props)

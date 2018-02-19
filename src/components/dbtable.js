@@ -2,22 +2,22 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 
-@inject("store")
+@inject("stores")
 @observer
 class AverageDataComponent extends React.Component {
 
   render() {
-    let model = this.props.store.model;
-    let data = model.averageRisk;
-    let date_indexes = model.dboardDateIndexes
-    let fcast_idx = date_indexes.fcast;
-    let risk = model.dataModel.dbtable.risk;
+    let data = this.props.stores.modeldata.averageRisk;
+    let fcast_idx = this.props.indexing.fcast;
+    let indexes = this.props.indexing.indexes;
+    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
+    let risk = model.dashboard.table.risk;
 
     return (
       <tr id="average-data" className="row_1">
         <th className="series-name data">7 Day Avg</th>
         <td className="series-data">
-          { this.props.indexes.map(function(idx) {
+          { indexes.map(function(idx) {
             let key_str = 'avg' + idx.toString();
             let class_str = 'data ' + risk[data[idx]];
             if (idx < fcast_idx) { class_str = class_str + ' obs';
@@ -31,22 +31,22 @@ class AverageDataComponent extends React.Component {
 }
 
 
-@inject("store")
+@inject("stores")
 @observer
 class DailyDataComponent extends React.Component {
 
   render() {
-    let model = this.props.store.model;
-    let data = model.dailyRisk;
-    let date_indexes = model.dboardDateIndexes
-    let fcast_idx = date_indexes.fcast;
-    let risk = model.dataModel.dbtable.risk;
+    let data = this.props.stores.modeldata.dailyRisk;
+    let fcast_idx = this.props.indexing.fcast;
+    let indexes = this.props.indexing.indexes;
+    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
+    let risk = model.dashboard.table.risk;
 
     return (
       <tr id="daily-data" className="row_1">
         <th className="series-name data">Daily</th>
         <td className="series-data">
-          { this.props.indexes.map(function(idx) {
+          { indexes.map(function(idx) {
             let key_str = 'daily' + idx.toString();
             let class_str = 'data ' + risk[data[idx]];
             if (idx < fcast_idx) { class_str = class_str + ' obs';
@@ -60,18 +60,16 @@ class DailyDataComponent extends React.Component {
 }
 
 
-@inject("store")
+@inject("stores")
 @observer
 class DailyDateComponent extends React.Component {
 
   render() {
-    const model = this.props.store.model;
-    const date_indexes = model.dboardDateIndexes
-    const model_dates = model.modelDates;
-
-    let indexes = this.props.indexes;
-    let fcast_idx = date_indexes.fcast;
-    let first_valid = model_dates.firstValid;
+    let fcast_idx = this.props.indexing.fcast;
+    let first_valid = this.props.indexing.first_valid;
+    let indexes = this.props.indexing.indexes;
+    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
+    let risk = model.dashboard.table.risk;
 
     return (
       <tr id="dashboard-dates" className="dates">
@@ -93,12 +91,12 @@ class DailyDateComponent extends React.Component {
 }
 
 
-@inject("store")
+@inject("stores")
 @observer
 class DashboardLegend extends React.Component {
   render() {
-    let model = this.props.store.model.dataModel
-    let legend = model.dbtable;
+    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
+    let legend = model.dashboard.table;
     return (
       <div className="dashboard-element-legend">
         { legend.risk.map(function(value,i) {
@@ -113,21 +111,43 @@ class DashboardLegend extends React.Component {
 }
 
 
-@inject("store")
+@inject("stores")
 @observer
 class DashboardTable extends React.Component {
 
-  genDataIndexes(first, last) {
+  dateIndexing = (data_model, model_dates, season_dates) => {
+    let first_idx = 0;
+    let fcast_idx = 999;
+    let last_idx = model_dates.lastValid.diff(season_dates.seasonStart,'d');
+    let first_valid = (model_dates.firstValid ? model_dates.firstValid : season_dates.startDate);
+
+    if (model_dates.doi) {
+      let doi = model_dates.doi.diff(first_valid,'d');
+      first_idx = doi - 3;
+      fcast_idx = doi + 1;
+      last_idx = first_idx + data_model.dashboard.table.columns - 1;
+    } else {
+      if (model_dates.fcastStart && model_dates.fcastStart <= model_dates.lastValid) {
+        fcast_idx = model_dates.fcastStart.diff(first_valid,'d');
+        if (model_dates.fcastEnd <= model_dates.lastValid) {
+            last_idx = model_dates.fcastEnd.diff(first_valid,'d');
+        }
+      }
+      first_idx = last_idx - data_model.dashboard.table.columns + 1;
+    }
+
     let indexes = [ ];
-    let idx = first;
-    while (idx <= last) { indexes.push(idx); idx++; }
-    return indexes;
+    let idx = first_idx;
+    while (idx <= last_idx) { indexes.push(idx); idx++; }
+    return { first_valid:first_valid, fcast:fcast_idx, indexes:indexes }
   }
 
   render () {
-    const model = this.props.store.model;
-    const date_indexes = model.dboardDateIndexes;
-    const indexes = this.genDataIndexes(date_indexes.first, date_indexes.last);
+    const data_store = this.props.stores.modeldata;
+    const date_store = this.props.stores.modeldata;
+    const model_store = this.props.stores.models;
+    let model = model_store.model(data_store.model_name);
+    let indexing = this.dateIndexing(model, date_store.modelDates, date_store.seasonDates);
 
     return (
       <div className="turf-dashboard-element">
@@ -136,9 +156,9 @@ class DashboardTable extends React.Component {
         </div>
         <table className="turf-dashboard-table" cellPadding="0" cellSpacing="0">
         <tbody>
-          <DailyDataComponent indexes={indexes} />
-          <AverageDataComponent indexes={indexes} />
-          <DailyDateComponent indexes={indexes} />
+          <DailyDataComponent indexing={indexing} />
+          <AverageDataComponent indexing={indexing} />
+          <DailyDateComponent indexing={indexing} />
         </tbody>
         </table>
       </div>
