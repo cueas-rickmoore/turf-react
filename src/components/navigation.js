@@ -19,17 +19,17 @@ class InactiveMenuTitle extends React.Component {
 @observer
 class DiseaseRiskMenu extends React.Component {
 
-  clickHandler(data_keys) { this.props.stores.updateContentPane(data_keys) }
+  clickHandler(data_keys) { this.props.stores.appstore.updateContentPane(data_keys) }
 
   render() {
     return (
-      <div clasName="turf-active-menu">
+      <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-diseases" className="turf-nav-items">
-          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","anthrac"])}>Anthracnose</button>
-          <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","bpatch"])}>Brown Patch</button>
-          <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","dspot"])}>Dollarspot</button>
-          <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","pblight"])}>Pythium Blight</button>
+          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"anthrac"})}>Anthracnose</button>
+          <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"bpatch"})}>Brown Patch</button>
+          <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"dspot"})}>Dollarspot</button>
+          <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"pblight"})}>Pythium Blight</button>
         </div>
       </div>
       );
@@ -41,15 +41,15 @@ class DiseaseRiskMenu extends React.Component {
 @observer
 class TurfDevelopmentMenu extends React.Component {
 
-  clickHandler(data_keys) { this.props.stores.turf.updatePageType(data_keys) }
+  clickHandler(data_keys) { this.props.stores.updateContentPane(data_keys) }
 
   render() {
     return (
-      <div clasName="turf-active-menu">
+      <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-development" className="turf-nav-items">
-          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","seedhead"])}>Seedhead Recommendations</button>
-          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, ["dashboard","dandelion"])}>Dandelion Recommendations</button>
+          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"seedhead"})}>Seedhead Recommendations</button>
+          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"dandelion"})}>Dandelion Recommendations</button>
         </div>
       </div>
       );
@@ -59,7 +59,7 @@ class TurfDevelopmentMenu extends React.Component {
 class TurfIrrigationMenu extends React.Component {
   render() {
     return (
-      <div clasName="turf-active-menu">
+      <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-irrigation" className="turf-nav-items">
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/rainfall.html" target="_blank" rel="noopener noreferrer">Last Week's Rainfall</a></div>
@@ -72,14 +72,20 @@ class TurfIrrigationMenu extends React.Component {
     }
 }
 
+
+@inject("stores")
+@observer
 class TurfTemperatureMenu extends React.Component {
+
+  clickHandler(data_keys) { this.props.stores.updateContentPane(data_keys) }
+
   render() {
     return (
-      <div clasName="turf-active-menu">
+      <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-temperature" className="turf-nav-items">
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/degreedays.html" target="_blank" rel="noopener noreferrer">GDD</a></div>
-          <button id="hstress" className="turf-nav-button">Heat Stress Index</button>
+          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"hstress"})}>Heat Stress Index</button>
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/frost.html" target="_blank" rel="noopener noreferrer">Frost Occurrence</a></div>
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/soiltemp.html" target="_blank" rel="noopener noreferrer">Soil Temperature</a></div>
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/temps.html" target="_blank" rel="noopener noreferrer">Temperature Departure</a></div>
@@ -92,7 +98,7 @@ class TurfTemperatureMenu extends React.Component {
 class TurfUsefulLinksMenu extends React.Component {
   render() {
     return (
-      <div clasName="turf-active-menu">
+      <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-useful-links" className="turf-nav-items">
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/grassWeb_dd.html" target="_blank" rel="noopener noreferrer">Seasonal GDD Table</a></div>
@@ -110,7 +116,7 @@ class TurfUsefulLinksMenu extends React.Component {
 class TurfRadarMenu extends React.Component {
   render() {
     return (
-      <div clasName="turf-active-menu">
+      <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-radar" className="turf-nav-items">
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/radar.html" target="_blank" rel="noopener noreferrer">NWS NE Region</a></div>

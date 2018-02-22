@@ -10,8 +10,9 @@ class DashboardThumbnail extends React.Component {
     let span_key = 'tmblbl' + thumb.key_string;
     return(
       <div key={div_key} className="thumb">
+         <a href={thumb.map} target="_blank">
          <img key={img_key} className="thumbnail" src={thumb.url} alt={thumb.alt} />
-         <br/><span key={span_key} className="thumbnail-date">{thumb.label}</span>
+         <br/><span key={span_key} className="thumbnail-date">{thumb.label}</span></a>
       </div>
     )
   }
@@ -22,11 +23,12 @@ class DashboardThumbnail extends React.Component {
 class DashboardThumbnails extends React.Component {
 
   render() {
-    const model_dates = this.props.stores.modeldata.modelDates;
-    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
+    const model_dates = this.props.stores.datastore.modelDates;
+    let model = this.props.stores.models.model(this.props.stores.datastore.modelName);
 
     let thumb_model = model.dashboard.thumbs;
     let thumb_url = model.urls.thumbs;
+    let map_url = model.urls.maps;
     let start_date = model_dates.doi;
     if (!start_date) {
         start_date = model_dates.endDate.clone().subtract(model.thumbs.count-1, 'd')
@@ -44,6 +46,7 @@ class DashboardThumbnails extends React.Component {
           let thumb = { alt: thumb_model.altString.replace('SLASHED', label_date),
                         key_string: full_date,
                         label: label_date,
+                        map: map_url.replace('YEAR', the_date.year().toString()).replace('DATESTR', full_date),
                         url: thumb_url.replace('YEAR', the_date.year().toString()).replace('DATESTR', full_date),
                       }
 

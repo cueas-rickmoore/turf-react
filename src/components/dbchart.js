@@ -60,12 +60,12 @@ class DashboardColumnChart extends Component {
 
   render() {
     /* access the observables in the model and data stores */
-    const data_model = this.props.stores.models.model(this.props.stores.contentModel);
-    const model_data = this.props.stores.modeldata.dailyRisk.map(x => x + 1.0);
-    const model_dates = this.props.stores.modeldata.modelDates;
-    const season = this.props.stores.modeldata.seasonDates;
+    const data_model = this.props.stores.models.model(this.props.stores.datastore.modelName);
+    const risk_data = this.props.stores.datastore.dailyRisk
+    const model_dates = this.props.stores.datastore.modelDates;
+    const season = this.props.stores.datastore.seasonDates;
 
-    let chartConfig = this.genChartConfig(data_model, model_data, model_dates, season);
+    let chartConfig = this.genChartConfig(data_model, risk_data.map(x => x + 1.0), model_dates, season);
 
     return (
       <div id="dashboard-chart-container">

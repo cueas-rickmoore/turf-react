@@ -22,6 +22,7 @@ export default class TurfDataModels {
           thumbs: Object.assign({}, this.defaults.dbthumbs, { altString:"SLASHED Anthracnose Risk Map", }),
         },
         description: "Anthracnose Risk Estimates",
+        full_name: "Anthracnose",
         name: 'anthrac',
         urls: {
           data: '/data/YEAR/json/Anthracnose/YEAR-GRIDNODE-Anthracnose-Risk.json',
@@ -36,6 +37,7 @@ export default class TurfDataModels {
           thumbs: Object.assign({}, this.defaults.dbthumbs, { altString:"SLASHED Brown Patch Risk Map", }),
         },
         description: "Brown Patch Risk Estimates",
+        full_name: "Brown Patch",
         name: 'bpatch',
         urls: {
           data: '/data/YEAR/json/Brown-Patch/YEAR-GRIDNODE-Brown-Patch-Risk.json',
@@ -44,7 +46,21 @@ export default class TurfDataModels {
         },
       },
       dandelion: { 
+        full_name: 'Dandelion',
+        gdd_threshold:50,
         name: 'dandelion',
+        treatments: {
+            amine: {
+                name:'Amine',
+                stages:['early','marginal','favorable'],
+                stage_thresholds:[0,150,180],
+            },
+            ester: {
+                name:'Ester',
+                stages:['early','marginal','favorable'],
+                stage_thresholds:[0,130,145],
+            },
+        },
         urls: {
           data:'/data/YEAR/json/Dollarspot/YEAR-GRIDNODE-Dandelion.json',
           maps:'/data/YEAR/maps/Dandelion/DATESTR-Dandelion-TREATMENT-Map.png',
@@ -58,6 +74,7 @@ export default class TurfDataModels {
           thumbs: Object.assign({}, this.defaults.dbthumbs, { altString:"SLASHED Dollarspot Risk Map", }),
         },
         description: "Dollarspot Risk Estimates",
+        full_name: "Dollarspot",
         name: 'dspot',
         urls: {
           data:'/data/YEAR/json/Dollarspot/YEAR-GRIDNODE-Dollarspot-Risk.json',
@@ -72,6 +89,7 @@ export default class TurfDataModels {
           thumbs: Object.assign({}, this.defaults.dbthumbs, { altString:"SLASHED Heat Stress Index Map", }),
         },
         description: "Heat Stress Index Estimates",
+        full_name: "Heat Stress",
         name: 'hstress',
         urls: {
           data:'/data/YEAR/json/Heat-Stress/YEAR-GRIDNODE-Heat-Stress-Risk.json',
@@ -86,6 +104,7 @@ export default class TurfDataModels {
           thumbs: Object.assign({}, this.defaults.dbthumbs, { altString: "SLASHED Pythium Blight Risk Map", }),
         },
         description: "Pythium Blight Risk Estimates",
+        full_name: "Pythium Blight",
         name: 'pblight',
         urls: {
           data:'/data/YEAR/json/Pythium-Blight/YEAR-GRIDNODE-Pythium-Blight-Risk.json',
@@ -94,7 +113,21 @@ export default class TurfDataModels {
         },
       },
       seedhead: {
+        full_name: 'Seedhead',
+        gdd_threshold:32,
         name: 'seedhead',
+        treatments: {
+            embark: {
+                name:'Embark',
+                stages:['early','ideal','marginal','late'],
+                stage_thresholds:[0,350,450,650],
+            },
+            proxy: {
+                name:'Proxy',
+                stages:['early','ideal','marginal','late'],
+                stage_thresholds:[0,200,300,500],
+            },
+        },
         urls: {
           data: '/data/YEAR/json/Dollarspot/YEAR-GRIDNODE-Seedhead.json',
           maps: '/data/YEAR/maps/Seedhead/DATESTR-Seedhead-TREATMENT-Map.png',

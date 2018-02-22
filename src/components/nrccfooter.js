@@ -19,11 +19,11 @@ class NRCCFooter extends React.Component {
             </div>
             <div className="logo-2">
               <a href="http://www.nrcc.cornell.edu" rel="noopener noreferrer" target="_blank">
-              <img classNames="nrcc-logo-img" src="../images/nrcc-logo-square.png" alt="NRCC Logo" /></a>
+              <img className="nrcc-logo-img" src="../images/nrcc-logo-square.png" alt="NRCC Logo" /></a>
             </div>
             <div className="logo-3">
               <a href="https://www.ncdc.noaa.gov/customer-support/partnerships/regional-climate-centers" rel="noopener noreferrer" target="_blank">
-              <img class_name="logo-img" src="../images/noaa-rcc-logo.png" alt="RCC Logo" /></a>
+              <img className="logo-img" src="../images/noaa-rcc-logo.png" alt="RCC Logo" /></a>
             </div>
           </div>
         </div>

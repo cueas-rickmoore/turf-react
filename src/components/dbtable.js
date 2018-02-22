@@ -7,11 +7,12 @@ import moment from 'moment';
 class AverageDataComponent extends React.Component {
 
   render() {
-    let data = this.props.stores.modeldata.averageRisk;
     let fcast_idx = this.props.indexing.fcast;
     let indexes = this.props.indexing.indexes;
-    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
-    let risk = model.dashboard.table.risk;
+    let stores = this.props.stores;
+    let data = stores.datastore.averageRisk;
+    let model = stores.models.model(stores.datastore.model_name);
+    let risk = stores.models.model(stores.datastore.model_name).dashboard.table.risk;
 
     return (
       <tr id="average-data" className="row_1">
@@ -36,11 +37,12 @@ class AverageDataComponent extends React.Component {
 class DailyDataComponent extends React.Component {
 
   render() {
-    let data = this.props.stores.modeldata.dailyRisk;
     let fcast_idx = this.props.indexing.fcast;
     let indexes = this.props.indexing.indexes;
-    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
-    let risk = model.dashboard.table.risk;
+
+    let stores = this.props.stores;
+    let data = stores.datastore.dailyRisk;
+    let risk = stores.models.model(stores.datastore.model_name).dashboard.table.risk;
 
     return (
       <tr id="daily-data" className="row_1">
@@ -68,8 +70,7 @@ class DailyDateComponent extends React.Component {
     let fcast_idx = this.props.indexing.fcast;
     let first_valid = this.props.indexing.first_valid;
     let indexes = this.props.indexing.indexes;
-    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
-    let risk = model.dashboard.table.risk;
+    let risk = this.props.stores.models.model(this.props.stores.datastore.model_name).dashboard.table.risk;
 
     return (
       <tr id="dashboard-dates" className="dates">
@@ -95,7 +96,7 @@ class DailyDateComponent extends React.Component {
 @observer
 class DashboardLegend extends React.Component {
   render() {
-    let model = this.props.stores.models.model(this.props.stores.modeldata.model_name);
+    let model = this.props.stores.models.model(this.props.stores.datastore.model_name);
     let legend = model.dashboard.table;
     return (
       <div className="dashboard-element-legend">
@@ -143,11 +144,10 @@ class DashboardTable extends React.Component {
   }
 
   render () {
-    const data_store = this.props.stores.modeldata;
-    const date_store = this.props.stores.modeldata;
+    const data_store = this.props.stores.datastore;
     const model_store = this.props.stores.models;
     let model = model_store.model(data_store.model_name);
-    let indexing = this.dateIndexing(model, date_store.modelDates, date_store.seasonDates);
+    let indexing = this.dateIndexing(model, data_store.modelDates, data_store.seasonDates);
 
     return (
       <div className="turf-dashboard-element">
@@ -157,7 +157,7 @@ class DashboardTable extends React.Component {
         <table className="turf-dashboard-table" cellPadding="0" cellSpacing="0">
         <tbody>
           <DailyDataComponent indexing={indexing} />
-          <AverageDataComponent indexing={indexing} />
+          { data_store.averageRisk && <AverageDataComponent indexing={indexing} /> }
           <DailyDateComponent indexing={indexing} />
         </tbody>
         </table>

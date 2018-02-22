@@ -2,10 +2,6 @@ import { observable, computed, action } from 'mobx';
 
 
 export default class TurfLocationStore {
-    app;
-    constructor(app) {
-        this.app = app;
-    }
 
     @observable address = 'Robert Trent Jones Golf Course, Cornell University'
     @observable lat = 42.458;

@@ -3,16 +3,18 @@ import { inject, observer } from 'mobx-react';
 
 import TurfNavigation from './components/navigation.js';
 import TurfDashboard from './components/dashboard.js';
+import TurfMapComponent from './components/maps.js';
 import NRCCFooter from './components/nrccfooter.js';
 import './App.css';
 
 @inject("stores")
 class UnsupportedComponentType extends React.Component {
   render() {
+    const appstore = this.props.stores.appstore;
     return (
       <div id="turf-unsupported-content">
         <div className="turf-content-warning">
-          "{ this.props.stores.contentComponent }" is not a supported content type
+          "{ appstore.contentComponent }" is not a supported content type
         </div>
       </div>
     );
@@ -25,6 +27,7 @@ class UnsupportedComponentType extends React.Component {
 class App extends React.Component {
 
   render() {
+    const appstore = this.props.stores.appstore;
     return (
       <div className="App">
         <header className="App-header">
@@ -34,8 +37,10 @@ class App extends React.Component {
         <div id="App-content">
           <div id="navigation-pane"><TurfNavigation /></div>
           <div id="content-pane">
-            { this.props.stores.contentComponent === 'dashboard' && <TurfDashboard /> }
-            { this.props.stores.contentComponent !== 'dashboard' && <UnsupportedComponentType /> }
+            { appstore.contentComponent === 'dashboard'
+              ? <TurfDashboard /> : ( appstore.contentComponent === 'map'
+              ? <TurfMapComponent /> : <UnsupportedComponentType />
+            ) }
             <div>&nbsp;</div>
           </div>
         </div>
