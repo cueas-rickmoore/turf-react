@@ -11,7 +11,7 @@ import DashboardTitle from '../components/dbtitle';
 
 @inject("stores")
 @observer
-class TurfDashboard extends React.Component {
+class TurfThreatDashboard extends React.Component {
   render() {
     return (
       <div id="turf-dashboard">
@@ -30,6 +30,6 @@ class TurfDashboard extends React.Component {
   }
 }
 
-export default TurfDashboard;
+export default TurfThreatDashboard;
 
 

@@ -6,19 +6,19 @@ import { inject, observer } from 'mobx-react';
 class DashboardLegend extends React.Component {
 
   render() {
-    let table = this.props.stores.model.dbtable;
+    let legend = this.props.stores.models.model.dashboard.table;
 
     return (
       <div className="dashboard-element-legend">
-        { table.classes.map(function(class_name,i) {
-          let class_str = 'legend-circle ' + class_name;
-          let label = 'date ' + table.labels[i];
-          let key_str = 'legend-' + class_name;
-          return <span key={key_str} className={class_str}>{label}</span>;
+        { legend.classes.map(function(value,i) {
+          let class_str = 'legend-circle ' + value;
+          let label = legend.labels[i];
+          let key_str = 'legend' + i.toString();
+          return <span key={key_str}><span className={class_str}></span>{label}</span>;
         }) }
       </div> 
     )
   }
 }
 
-export default DashboardTitle;
+export default DashboardLegend;

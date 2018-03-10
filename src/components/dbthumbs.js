@@ -1,18 +1,32 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
+@inject("stores")
 class DashboardThumbnail extends React.Component {
-  render() {
-    let thumb = this.props.thumb;
+  clickHandler(the_date, model) {
+    this.props.stores.datestore.updateMapDate(the_date);
+    this.props.stores.appstore.updateContentPane({component:'maps', contentModel:model.name});
+  }
 
-    let div_key = 'tmb' + thumb.key_string;
-    let img_key = 'tmbimg' + thumb.key_string;
-    let span_key = 'tmblbl' + thumb.key_string;
+  render() {
+    let model = this.props.model;
+    let content_key = this.props.stores.appstore.contentKey;
+
+    let the_date = this.props.the_date;
+    let alt_date = the_date.format('MMMM Do Y');
+    let date_string = the_date.format('YMMDD');
+    let label = the_date.format('MM/DD/YY');
+
+    let alt = 'link to ' + model.dashboard.altString.replace('ALTDATE',alt_date);
+    let url = model.urls.thumbs.replace('YEAR',the_date.format('Y')).replace('DATESTR',date_string);
+    if (content_key) {
+        alt = alt.replace(/CONTENTKEY/gi, content_key);
+        url = url.replace(/CONTENTKEY/gi, content_key);
+    }
     return(
-      <div key={div_key} className="thumb">
-         <a href={thumb.map} target="_blank">
-         <img key={img_key} className="thumbnail" src={thumb.url} alt={thumb.alt} />
-         <br/><span key={span_key} className="thumbnail-date">{thumb.label}</span></a>
+      <div key={'tmb' + date_string} className="thumb" onClick={this.clickHandler.bind(this, the_date, model)}>
+        <img key={'tmbimg' + date_string} className="thumbnail" src={url} alt={alt} />
+        <br/><span key={'tmblbl' + date_string} className="thumbnail-date">{label}</span>
       </div>
     )
   }
@@ -23,36 +37,20 @@ class DashboardThumbnail extends React.Component {
 class DashboardThumbnails extends React.Component {
 
   render() {
-    const model_dates = this.props.stores.datastore.modelDates;
-    let model = this.props.stores.models.model(this.props.stores.datastore.modelName);
+    let model = this.props.stores.models.model;
 
-    let thumb_model = model.dashboard.thumbs;
-    let thumb_url = model.urls.thumbs;
-    let map_url = model.urls.maps;
-    let start_date = model_dates.doi;
-    if (!start_date) {
-        start_date = model_dates.endDate.clone().subtract(model.thumbs.count-1, 'd')
-    }
+    let start_date = this.props.stores.datestore.firstThumbDate.clone();
     let thumb_dates = [start_date, ];
-    for (let i=1; i < thumb_model.count; i++) {
+    for (let i=1; i < model.dashboard.thumbs.count; i++) {
         thumb_dates.push(start_date.clone().add(i, 'd'));
     }
 
     return (
       <div className="turf-dashboard-thumbnails">
         { thumb_dates.map(function(the_date,i){
-          let label_date = the_date.format('MM/DD/YY');
-          let full_date = the_date.format('YYYYMMDD');
-          let thumb = { alt: thumb_model.altString.replace('SLASHED', label_date),
-                        key_string: full_date,
-                        label: label_date,
-                        map: map_url.replace('YEAR', the_date.year().toString()).replace('DATESTR', full_date),
-                        url: thumb_url.replace('YEAR', the_date.year().toString()).replace('DATESTR', full_date),
-                      }
-
-          return <DashboardThumbnail thumb={thumb} />;
-          })
-        }
+          let key = 'thumbnail' + i;
+          return <DashboardThumbnail key={key} model={model} the_date={the_date} />;
+        }) }
       </div>
     )
   }

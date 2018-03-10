@@ -19,17 +19,20 @@ class InactiveMenuTitle extends React.Component {
 @observer
 class DiseaseRiskMenu extends React.Component {
 
-  clickHandler(data_keys) { this.props.stores.appstore.updateContentPane(data_keys) }
+  clickHandler(model_name) {
+      let content_keys = { component:"threats", contentModel:model_name };
+      this.props.stores.appstore.updateContentPane(content_keys);
+  }
 
   render() {
     return (
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-diseases" className="turf-nav-items">
-          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"anthrac"})}>Anthracnose</button>
-          <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"bpatch"})}>Brown Patch</button>
-          <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"dspot"})}>Dollarspot</button>
-          <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"pblight"})}>Pythium Blight</button>
+          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, "anthrac")}>Anthracnose</button>
+          <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, "bpatch")}>Brown Patch</button>
+          <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dspot")}>Dollarspot</button>
+          <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, "pblight")}>Pythium Blight</button>
         </div>
       </div>
       );
@@ -40,16 +43,19 @@ class DiseaseRiskMenu extends React.Component {
 @inject("stores")
 @observer
 class TurfDevelopmentMenu extends React.Component {
-
-  clickHandler(data_keys) { this.props.stores.updateContentPane(data_keys) }
+  
+  clickHandler(model_name) {
+      let content_keys = { component:"controls", contentModel:model_name };
+      this.props.stores.appstore.updateContentPane(content_keys);
+  }
 
   render() {
     return (
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-development" className="turf-nav-items">
-          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"seedhead"})}>Seedhead Recommendations</button>
-          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"dandelion"})}>Dandelion Recommendations</button>
+          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dandelion")}>Dandelion Recommendations</button>
+          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, "seedhead")}>Seedhead Recommendations</button>
         </div>
       </div>
       );
@@ -77,7 +83,10 @@ class TurfIrrigationMenu extends React.Component {
 @observer
 class TurfTemperatureMenu extends React.Component {
 
-  clickHandler(data_keys) { this.props.stores.updateContentPane(data_keys) }
+  clickHandler(model_name) {
+      let content_keys = { component:"threats", contentModel:model_name };
+      this.props.stores.appstore.updateContentPane(content_keys);
+  }
 
   render() {
     return (
@@ -85,7 +94,7 @@ class TurfTemperatureMenu extends React.Component {
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-temperature" className="turf-nav-items">
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/degreedays.html" target="_blank" rel="noopener noreferrer">GDD</a></div>
-          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, {component:"dashboard",content:"hstress"})}>Heat Stress Index</button>
+          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, "hstress")}>Heat Stress Index</button>
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/frost.html" target="_blank" rel="noopener noreferrer">Frost Occurrence</a></div>
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/soiltemp.html" target="_blank" rel="noopener noreferrer">Soil Temperature</a></div>
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/temps.html" target="_blank" rel="noopener noreferrer">Temperature Departure</a></div>

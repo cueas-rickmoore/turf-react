@@ -49,9 +49,10 @@
   }
 
   #content-pane {
-    width: 75%;
+    width: 77%;
     height: auto;
     /* min-width: 360px; */
+    margin-left: 3px;
     text-align: center;
     vertical-align: top;
   }
@@ -76,10 +77,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    height: 132px;
   }
 
   #nrcc-footer-left {
-    padding-right: 3.12%;
     width: 40%;
   }
 
@@ -92,38 +93,59 @@
     flex-direction: row;
     flex-wrap: nowrap;
     width: 60%;
+    margin-left: 3%;
   }
 
   #nrcc-footer-right .logo-1,
   #nrcc-footer-right .logo-2,
   #nrcc-footer-right .logo-3 {
     max-width: 50%;
-    margin-top: 15%;
     vertical-align: middle;
   }
 
   #nrcc-footer-right .logo-2,
   #nrcc-footer-right .logo-3 {
-    margin-left: 5%;
+    padding-left: 2.5%;
   }
 
   #nrcc-footer-right .logo-1 img,
   #nrcc-footer-right .logo-2 img,
   #nrcc-footer-right .logo-3 img {
+    margin-top: 15px;
     max-height: 60%;
+    width: 100%;
     object-fit: contain;
   }
+  
+  #nrcc-footer-right .logo-1 { width: 45%; }
+  #nrcc-footer-right .logo-2 { width: 25%; }
+  #nrcc-footer-right .logo-3 { width: 25%; }
 
-  #nrcc-footer .copyright {
-    padding-bottom: 10px;
-  }
+  #nrcc-footer .copyright { padding-bottom: 10px; }
 
 }
 
+@media only screen and (max-width: 912px) {
+  #nrcc-footer-main { height: 128px; }
+  #nrcc-footer-left { font-size: 12px; }
+}
+@media only screen and (max-width: 792px) {
+  #nrcc-footer-main { height: 120px; }
+  #nrcc-footer-left { font-size: 11px; }
+}
 @media only screen and (max-width: 720px) {
   /* .App-header { width: 100%; max-width: 420px; }
   #content-pane { width: 100%; max-width: 360px; }
   #navigation-pane { width: 100%; max-width: 360px; } */
   #content-pane { width: 97%; }
   #navigation-pane { width: 100%; }
+
+  #nrcc-footer-main { height: 110px; }
+  #nrcc-footer-left { font-size: 10px; }
+  #nrcc-footer .copyright { font-size: 12px; }
 }
+@media only screen and (max-width: 650px) {
+  #nrcc-footer-main { height: 100px; }
+  #nrcc-footer-left { font-size: 9px; }
+}
+

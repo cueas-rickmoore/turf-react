@@ -6,8 +6,7 @@ import { inject, observer } from 'mobx-react';
 class DashboardTitle extends React.Component {
 
   render() {
-    let stores = this.props.stores
-    let model = stores.models.model(stores.datastore.model_name);
+    let model = this.props.stores.models.model;
     return (
       <div className="dashboard-title">{model.description}</div>
     )

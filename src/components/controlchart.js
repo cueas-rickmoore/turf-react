@@ -4,21 +4,22 @@ import ReactHighstock from 'react-highcharts/ReactHighstock.src';
 
 @inject("stores")
 @observer
-class DashboardColumnChart extends Component {
+class ControlColumnChart extends Component {
 
-  genChartConfig(data_model, model_data, model_dates, season) {
-    let start_date = season.startDate;
-    if (model_dates.firstValid && (model_dates.firstValid > start_date)) {
-        start_date = model_dates.firstValid;
-    }
+  genChartConfig(data_model, model_data, datestore) {
+    console.log('ControlColumnChart.genChartConfig model : ' + data_model.fullname);
 
-    const dbchart = data_model.dashboard.chart;
+    let start_date = datestore.firstValidDate;
+    let chart_props = data_model.dashboard.chart;
 
-    const zones = dbchart.zones.map(function(zone,index) {
+    let num_zones = chart_props.zones.length;
+    let zones = chart_props.zones.map(function(zone,index) {
         return { value:zone, className:'zone-'+(index+1).toString() }
     });
 
     return {
+      isPureConfig: false,
+      neverReflow: false,
       chart: { alignTicks:false, height:225, renderTo:'#dashboard-chart-container' },
       legend: { enabled:false },
       navigator:{ enabled:true, height:40, margin:5, handles:{ borderColor:'#0000ff' }, series: { type:'column' }, yAxis:{ min:0.5, max:3 } },
@@ -37,9 +38,9 @@ class DashboardColumnChart extends Component {
       scrollbar:{ height:2 },
       series: [
         { colorByPoint: true,
-          colors: dbchart.colors,
+          colors: chart_props.colors,
           data: model_data,
-          name: dbchart.seriesName,
+          name: chart_props.seriesName,
           showInNavigator: true,
           type: 'column',
           zoneAxis: 'y',
@@ -52,7 +53,7 @@ class DashboardColumnChart extends Component {
       xAxis: {
         type: 'datetime',
         tickInterval:518400000, dateTimeLabelFormats:{ day:'%d %b', week:'%d %b', month:'%b<br/>%Y', year:'%Y' } },
-      yAxis: { title:null, max:3, min:0, labels:{ enabled:false }, tickInterval: 1 },
+      yAxis: { title:null, max:num_zones, min:0, labels:{ enabled:false }, tickInterval: 1 },
       zoneAxis: 'y',
       zones: zones, 
     }
@@ -60,12 +61,14 @@ class DashboardColumnChart extends Component {
 
   render() {
     /* access the observables in the model and data stores */
-    const data_model = this.props.stores.models.model;
-    const risk_data = this.props.stores.datastore.dailyRisk
-    const model_dates = this.props.stores.datestore.modelDates;
-    const season = this.props.stores.datestore.seasonDates;
+    let data_model = this.props.stores.models.model;
+    let chart_data = this.props.stores.datastore.data[this.props.treatment];
+    console.log('ControlColumnChart num data points = ' + chart_data.length + ' max = ' + Math.max(...chart_data))
+    console.log(chart_data)
+    let datestore = this.props.stores.datestore;
 
-    let chartConfig = this.genChartConfig(data_model, risk_data.map(x => x + 1.0), model_dates, season);
+    let chartConfig = this.genChartConfig(data_model, chart_data.map(x => x + 1.0), datestore);
+    console.log('\n\nCHART COLORS : ' + chartConfig.series[0].colors + '\n\n')
 
     return (
       <div id="dashboard-chart-container">
@@ -75,4 +78,4 @@ class DashboardColumnChart extends Component {
   }
 }
 
-export default DashboardColumnChart;
+export default ControlColumnChart;
