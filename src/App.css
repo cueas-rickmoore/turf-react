@@ -57,6 +57,43 @@
     vertical-align: top;
   }
 
+  #turf-home-page {
+    height: auto;
+    padding-left: 5px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .home-maps-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: auto;
+    margin-bottom: 2.5%;
+    margin-top: 2.5%;
+    width: 100%;
+  }
+
+  .home-map-container {
+    height: auto;
+    width: 50%;
+  }
+
+  .home-page-map {
+    height: auto;
+    margin-left: 2.5%;
+    width: 97.5%;
+  }
+ 
+  .home-map-label {
+    color: #000000;
+    font-size: 16px;
+    text-align: center;
+  }
+
   #navigation-pane {
     height: auto;
     width: 20%;
@@ -126,10 +163,12 @@
 }
 
 @media only screen and (max-width: 912px) {
+  .home-map-label { font-size: 14px; }
   #nrcc-footer-main { height: 128px; }
   #nrcc-footer-left { font-size: 12px; }
 }
 @media only screen and (max-width: 792px) {
+  .home-map-label { font-size: 12px; }
   #nrcc-footer-main { height: 120px; }
   #nrcc-footer-left { font-size: 11px; }
 }
@@ -147,5 +186,11 @@
 @media only screen and (max-width: 650px) {
   #nrcc-footer-main { height: 100px; }
   #nrcc-footer-left { font-size: 9px; }
+}
+@media only screen and (max-width: 600px) {
+  .home-map-label { font-size: 11px; }
+}
+@media only screen and (max-width: 500px) {
+  .home-map-label { font-size: 10px; }
 }
 

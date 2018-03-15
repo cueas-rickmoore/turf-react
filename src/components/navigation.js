@@ -165,6 +165,11 @@ class TurfNavigation extends React.Component {
       this.setState({'selectedMenu': menu_type,});
     }
   }
+  
+  homeClickHandler() {
+      let content_keys = { component:"home" };
+      this.props.stores.appstore.updateContentPane(content_keys);
+  }
 
   render() {
     let selectedMenu = this.state.selectedMenu;
@@ -172,6 +177,8 @@ class TurfNavigation extends React.Component {
     return (
       <div className="turf-navigation">
         <div className="turf-nav-menus">
+          <div className="turf-nav-home" onClick={this.homeClickHandler.bind(this)}>Turf Home Page</div>
+
           <div className="turf-nav-menu" onClick={this.divClickHandler.bind(this, "disease")}>
             { selectedMenu === "disease" && <DiseaseRiskMenu title="Disease Risk"/> }
             { selectedMenu !== "disease" && <InactiveMenuTitle title="Disease Risk"/> }

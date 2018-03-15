@@ -5,8 +5,8 @@ export default class AppStore {
     supported_groups;
     constructor(appstores) {
       this.stores = appstores;
-      this.stores.models.changeDataModel('anthrac');
-      this.supported_groups = ['threats','controls'];
+      /* this.stores.models.changeDataModel('anthrac'); */
+      this.supported_groups = ['controls', 'home', 'threats'];
     }
 
     downloadModelContent(content_model) {
@@ -28,19 +28,22 @@ export default class AppStore {
             */
     }
 
-    @observable contentComponent = 'threats';
-    @observable contentModel = 'anthrac';
+    @observable contentComponent = 'home';
+    @observable contentModel = null;
     @observable contentKey = null;
 
     @action updateContentPane(request) {
       console.log('Turf AppStore.updateContentPane change requested');
       console.log(    'change request : ' + request.component + ', ' + request.contentModel + ', ' + request.contentKey);
-      if (request.contentModel !== this.contentModel) {
-        console.log('    initiating model content download for "' + request.contentModel);
-        this.stores.datastore.obliviate();
-        this.contentModel = request.contentModel;
-        this.downloadModelContent(this.contentModel);
-      }
+      if (request.contentModel) {
+        if (request.contentModel !== this.contentModel) {
+            console.log('    initiating model content download for "' + request.contentModel);
+            this.stores.datastore.obliviate();
+            this.contentModel = request.contentModel;
+            this.downloadModelContent(this.contentModel);
+        }
+      } else { this.content_model = null; }
+
       if (request.contentKey) {
         if (request.contentKey !== this.contentKey) {
           this.contentKey = request.contentKey;
@@ -48,6 +51,7 @@ export default class AppStore {
       } else if (this.contentKey) {
         this.contentKey = null;
       }
+
       if (request.component !== this.contentComponent) {
         console.log('    changing contentComponent ' + request.component); 
         this.contentComponent = request.component;

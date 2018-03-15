@@ -188,10 +188,6 @@ export default class TurfDataModels {
     }
   }
 
-  urlTemplate = (model_name, url_type) => {
-    return this.models[model_name].urls[url_type]
-  }
-
   @observable active_model = null;
   @observable model_name = null;
   @action changeDataModel = (model_name) => {
@@ -202,6 +198,12 @@ export default class TurfDataModels {
     }
   @computed get modelName() { return this.model_name }
   @computed get model() { return this.active_model }
+
+  modelFromName = (model_name) => { return this.models[model_name] }
+
+  urlTemplate = (model_name, url_type) => {
+    return this.models[model_name].urls[url_type]
+  }
 
 }
 

@@ -7,6 +7,27 @@
     color: white;
   }
 
+  #turf-navigation-panel {
+    height: auto;
+    width: 100%;
+    color: white;
+  }
+
+  #turf-navpanel-content {
+    height: auto;
+  }
+
+  #turf-navpanel-content.closed {
+    width: 0;
+  }
+  #turf-navpanel-content.open {
+    width: auto;
+  }
+  #turf-nav-content-toggle {
+    height: auto;
+    width: 15px;
+  }
+
   .turf-nav-menus {
     background-color: #ffffff;
     border: none;
@@ -25,6 +46,7 @@
     width: 100%;
   }
 
+  .turf-nav-home,
   .turf-inactive-menu-title,
   .turf-nav-menu-title,
   .turf-nav-weather {
@@ -39,6 +61,7 @@
     padding: 5px 10px;
     text-align: left;
   }
+  .turf-nav-home:hover,
   .turf-inactive-menu-title:hover,
   .turf-nav-menu-title:hover,
   .turf-nav-weather:hover { color: #637b35;  }
