@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 
 @inject("stores")
 @observer
-class TurfMapImage extends React.Component {
+class ThreatMapImage extends React.Component {
 
   render() {
     let content_key = this.props.stores.appstore.contentKey;
@@ -35,6 +35,6 @@ class TurfMapImage extends React.Component {
   }
 }
 
-export default TurfMapImage;
+export default ThreatMapImage;
 
 

@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 class TreatmentThumbnail extends React.Component {
   clickHandler(the_date, model, treatment) {
     this.props.stores.datestore.updateMapDate(the_date);
-    let component = { component:'maps', contentModel:model.name, contentKey:treatment }
+    let component = { component:'maps', contentGroup:'controls', contentModel:model.name, contentKey:treatment }
     this.props.stores.appstore.updateContentPane(component);
   }
 
@@ -63,7 +63,7 @@ class TreatmentThumbnails extends React.Component {
 
 @inject("stores")
 @observer
-class DashboardTreatmentThumbs extends React.Component {
+class ControlsDashboardThumbs extends React.Component {
 
   render() {
     let model = this.props.stores.models.model;
@@ -79,4 +79,4 @@ class DashboardTreatmentThumbs extends React.Component {
   }
 }
 
-export default DashboardTreatmentThumbs;
+export default ControlsDashboardThumbs;

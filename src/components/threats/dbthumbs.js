@@ -2,10 +2,10 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 @inject("stores")
-class DashboardThumbnail extends React.Component {
+class ThreatDashboardThumbnail extends React.Component {
   clickHandler(the_date, model) {
     this.props.stores.datestore.updateMapDate(the_date);
-    this.props.stores.appstore.updateContentPane({component:'maps', contentModel:model.name});
+    this.props.stores.appstore.updateContentPane({component:'maps', contentGroup:'threats', contentModel:model.name});
   }
 
   render() {
@@ -34,7 +34,7 @@ class DashboardThumbnail extends React.Component {
 
 @inject("stores")
 @observer
-class DashboardThumbnails extends React.Component {
+class ThreatDashboardThumbnails extends React.Component {
 
   render() {
     let model = this.props.stores.models.model;
@@ -49,11 +49,11 @@ class DashboardThumbnails extends React.Component {
       <div className="turf-dashboard-thumbnails">
         { thumb_dates.map(function(the_date,i){
           let key = 'thumbnail' + i;
-          return <DashboardThumbnail key={key} model={model} the_date={the_date} />;
+          return <ThreatDashboardThumbnail key={key} model={model} the_date={the_date} />;
         }) }
       </div>
     )
   }
 }
 
-export default DashboardThumbnails;
+export default ThreatDashboardThumbnails;

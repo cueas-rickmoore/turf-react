@@ -5,10 +5,9 @@ import "../styles/dashboard.css";
 import "../styles/mappane.css";
 import DashboardDescription from '../components/dbdescription.js';
 import DashboardLocation from '../components/dblocation.js';
-import TreatmentMapImage from '../components/treatmapimage.js';
-import TreatmentMapThumbnails from '../components/treatmapthumbs.js';
-import TurfMapImage from '../components/mapimage.js';
-import TurfMapThumbnails from '../components/mapthumbs.js';
+import ExternalMapPane from '../components/external/mappane.js';
+import ThreatMapPane from '../components/threats/mappane.js';
+import TreatmentMapPane from '../components/controls/mappane.js';
 
 
 @inject("stores")
@@ -16,27 +15,25 @@ import TurfMapThumbnails from '../components/mapthumbs.js';
 class TurfMapContentPane extends React.Component {
 
   render() {
-    console.log('TurfMapContentPane.render : this.props.stores.appstore.contentKey = ' + this.props.stores.appstore.contentKey)
-    if (this.props.stores.appstore.contentKey === null) {
+
+    console.log('TurfMapContentPane for "' + this.props.stores.appstore.contentGroup + '"')
+
+    if (this.props.stores.appstore.contentGroup === 'threats') {
       return (
         <div id="turf-dashboard">
-          <DashboardLocation/>
-          <div id="turf-map-pane">
-            <TurfMapImage />
-            <TurfMapThumbnails />
-          </div>
-          <DashboardDescription />
+          <ThreatMapPane />
         </div>
       )
-    } else {
+    } else if (this.props.stores.appstore.contentGroup === 'controls') {
       return (
         <div id="turf-dashboard">
-          <DashboardLocation/>
-          <div id="turf-map-pane">
-            <TreatmentMapImage />
-            <TreatmentMapThumbnails />
-          </div>
-          <DashboardDescription />
+          <TreatmentMapPane />
+        </div>
+      )
+    } else if (this.props.stores.appstore.contentGroup === 'external') {
+      return (
+        <div id="turf-dashboard">
+          <ExternalMapPane />
         </div>
       )
     }

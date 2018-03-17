@@ -3,10 +3,12 @@ import { inject, observer } from 'mobx-react';
 
 @inject("stores")
 @observer
-class TurfMapThumbnail extends React.Component {
+class ThreatMapThumbnail extends React.Component {
 
-  clickHandler(the_date) {
+  clickHandler(model, the_date) {
     this.props.stores.datestore.updateMapDate(the_date);
+    let component = { component:'maps', contentGroup:'threats', contentModel:model.name, contentKey:null }
+    this.props.stores.appstore.updateContentPane(component);
   }
 
   render() {
@@ -19,7 +21,7 @@ class TurfMapThumbnail extends React.Component {
     let url = model.urls.thumbs.replace('YEAR', the_date.year().toString()).replace('DATESTR', date_string);
 
     return(
-      <div className="map-thumb" onClick={this.clickHandler.bind(this, the_date)}>
+      <div className="map-thumb" onClick={this.clickHandler.bind(this, model, the_date)}>
         <img className="thumbnail" src={url} alt={alt} />
         <br/><span className="thumbnail-date">{label}</span>
       </div>
@@ -29,7 +31,7 @@ class TurfMapThumbnail extends React.Component {
 
 @inject("stores")
 @observer
-class TurfMapThumbnails extends React.Component {
+class ThreatMapThumbnails extends React.Component {
 
   render() {
     let model = this.props.stores.models.model;
@@ -47,11 +49,11 @@ class TurfMapThumbnails extends React.Component {
       <div className="turf-map-thumbnails">
         { the_dates.map(function(the_date,i) {
           let key_string = 'mapthumb' + the_date.format('YMMDD');
-          return <TurfMapThumbnail key={key_string} the_date={the_date} model={model} />;
+          return <ThreatMapThumbnail key={key_string} the_date={the_date} model={model} />;
         }) }
       </div>
     )
   }
 }
 
-export default TurfMapThumbnails;
+export default ThreatMapThumbnails;

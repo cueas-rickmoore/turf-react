@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 class MapButton extends React.Component {
   clickHandler(treatment_key) {
     let model = this.props.stores.models.model;
-    let component = { component:'maps', contentModel:model.name, contentKey:treatment_key }
+    let component = { component:'maps', contentGroup:'controls', contentModel:model.name, contentKey:treatment_key }
     this.props.stores.appstore.updateContentPane(component);
   }
 

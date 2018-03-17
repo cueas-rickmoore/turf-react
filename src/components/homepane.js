@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 class HomePageMap extends React.Component {
 
   clickHandler() {
-      let content_keys = { component:"threats", contentModel:this.props.model, contentKey:null };
+      let content_keys = { component:"dashboard", contentGroup:"threats", contentModel:this.props.model, contentKey:null };
       this.props.stores.appstore.updateContentPane(content_keys);
   }
 

@@ -2,12 +2,10 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 import TurfNavigation from './components/navigation.js';
-/* import TurfNavigationDrawer from './components/navdrawer.js'; */
-/* import TurfNavigationPanel from './components/navpanel.js'; */
-import TurfControlDashboard from './components/controlboard.js';
+import TurfControlsDashboard from './components/controls/dashboard.js';
 import TurfHomeContentPane from './components/homepane.js';
 import TurfMapContentPane from './components/mappane.js';
-import TurfThreatDashboard from './components/threatboard.js';
+import TurfModelDashboard from './components/dashboard.js';
 import NRCCFooter from './components/nrccfooter.js';
 import './App.css';
 
@@ -29,10 +27,16 @@ class UnsupportedComponentType extends React.Component {
 @inject("stores")
 @observer
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.root_components = ['dashboard','home','maps']
+  }
    
   render() {
     let appstore = this.props.stores.appstore;
     let datastore = this.props.stores.datastore;
+    let root_components = this.root_components;
 
     console.log('\n\ncontentComponent = ' + appstore.contentComponent);
     console.log('    contentModel = ' + appstore.contentModel);
@@ -47,14 +51,18 @@ class App extends React.Component {
           <div id="navigation-pane"><TurfNavigation /></div>
           <div id="content-pane">
             { appstore.contentComponent === 'home' && <TurfHomeContentPane /> }
-            { appstore.contentComponent === 'controls' && datastore.data && <TurfControlDashboard />  }
+            { appstore.contentComponent === 'dashboard' &&
+              datastore.data && <TurfModelDashboard />  }
+            { appstore.contentComponent === 'maps' &&
+              appstore.contentGroup === 'control' &&
+              datastore.data && <TurfMapContentPane />  }
+            { appstore.contentComponent === 'maps' &&
+              appstore.contentGroup === 'threats' &&
+              datastore.data && <TurfMapContentPane />  }
+
             { appstore.contentComponent === 'maps' && <TurfMapContentPane /> }
-            { appstore.contentComponent === 'threats' && datastore.data && <TurfThreatDashboard />  }
-            { appstore.contentComponent !== 'controls' &&
-              appstore.contentComponent !== 'home' &&
-              appstore.contentComponent !== 'maps' &&
-              appstore.contentComponent !== 'threats' && 
-              <UnsupportedComponentType /> }
+
+            { !root_components.includes(appstore.contentComponent) && <UnsupportedComponentType /> }
             <div>&nbsp;</div>
           </div>
         </div>

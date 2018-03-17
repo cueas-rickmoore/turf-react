@@ -2,11 +2,14 @@ import { observable, action } from 'mobx';
 
 export default class AppStore {
     stores;
-    supported_groups;
+    valid_components;
+    valid_models;
     constructor(appstores) {
       this.stores = appstores;
-      /* this.stores.models.changeDataModel('anthrac'); */
-      this.supported_groups = ['controls', 'home', 'threats'];
+      this.model_groups = ['controls','threats'];
+      this.valid_components = ['dashboard', 'home', 'maps',
+                               'controlboard', 'controlmap', 'threatboard', 'threatmap', 
+                               'externmap', 'controls', 'threats'];
     }
 
     downloadModelContent(content_model) {
@@ -29,27 +32,32 @@ export default class AppStore {
     }
 
     @observable contentComponent = 'home';
+    @observable contentGroup = null;
     @observable contentModel = null;
     @observable contentKey = null;
 
     @action updateContentPane(request) {
       console.log('Turf AppStore.updateContentPane change requested');
-      console.log(    'change request : ' + request.component + ', ' + request.contentModel + ', ' + request.contentKey);
-      if (request.contentModel) {
-        if (request.contentModel !== this.contentModel) {
-            console.log('    initiating model content download for "' + request.contentModel);
-            this.stores.datastore.obliviate();
-            this.contentModel = request.contentModel;
-            this.downloadModelContent(this.contentModel);
-        }
-      } else { this.content_model = null; }
+      console.log(    'change request : ' + request.component + ', ' + request.contentGroup + ', ' + request.contentModel + ', ' + request.contentKey);
+      if (!this.valid_components.includes(request.component)) {
+        throw new ReferenceError('"' + request.component + '" is not a valid component name.'); 
+      }
 
-      if (request.contentKey) {
-        if (request.contentKey !== this.contentKey) {
-          this.contentKey = request.contentKey;
+      if (request.contentGroup !== this.contentGroup) {
+        this.contentGroup = request.contentGroup;
+      }
+
+      if (request.contentModel !== this.contentModel) {
+        console.log('    initiating model content download for "' + request.contentModel);
+        this.contentModel = request.contentModel;
+        if (this.stores.models.isValidModel(this.contentModel)) {
+          this.stores.datastore.obliviate();
+          this.downloadModelContent(this.contentModel);
         }
-      } else if (this.contentKey) {
-        this.contentKey = null;
+      }
+
+      if (request.contentKey !== this.contentKey) {
+        this.contentKey = request.contentKey;
       }
 
       if (request.component !== this.contentComponent) {
@@ -60,14 +68,14 @@ export default class AppStore {
     }
 
     @action updateModelContent = (json) => {
-      if (this.supported_groups.indexOf(json.group) === -1) {
-        console.log('Turf AppStore.updateModelContent : JSON FILE CONTENT ERROR');
-        console.log('    received json for unknown model "' + json.group + '.' + json.name + '"');
-      } else {
+      if (this.model_groups.includes(json.group) && this.stores.models.isValidModel(json.name)) {
         this.contentModel = json.name;
         this.stores.models.changeDataModel(json.name);
         this.stores.datestore.updateModelDates(json);
         this.stores.datastore.updateModelData(json);
+      } else {
+        console.log('Turf AppStore.updateModelContent : JSON FILE CONTENT ERROR');
+        console.log('    received json for unknown data model "' + json.group + '.' + json.name + '"');
       }
     }
 

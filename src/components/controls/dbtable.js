@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import DashboardDates from '../components/dbdates.js';
-import DashboardLegend from '../components/dblegend.js';
+import DashboardDates from '../../components/dbdates.js';
+import DashboardLegend from '../../components/dblegend.js';
 
 @inject("stores")
 @observer
@@ -37,7 +37,7 @@ class DataComponent extends React.Component {
 
 @inject("stores")
 @observer
-class DashboardTreatmentsTable extends React.Component {
+class ControlsDashboardTable extends React.Component {
 
   dateIndexes = () => {
     let date_indexes = this.props.stores.datestore.dboardDateIndexes;
@@ -73,4 +73,4 @@ class DashboardTreatmentsTable extends React.Component {
   }
 }
 
-export default DashboardTreatmentsTable;
+export default ControlsDashboardTable;

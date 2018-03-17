@@ -4,7 +4,7 @@ import ReactHighstock from 'react-highcharts/ReactHighstock.src';
 
 @inject("stores")
 @observer
-class DashboardColumnChart extends Component {
+class ThreatColumnChart extends Component {
 
   genChartConfig(data_model, model_data, model_dates, season) {
     let start_date = season.startDate;
@@ -75,4 +75,4 @@ class DashboardColumnChart extends Component {
   }
 }
 
-export default DashboardColumnChart;
+export default ThreatColumnChart;

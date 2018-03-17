@@ -77,32 +77,34 @@
     text-align: left;
   }
 
-  .turf-nav-items { margin-left: 5%; width: 95%; }
-
-  .turf-nav-button {
-    width: 100%;
-    background-color: #ffffff;
-    /* color: #81c343; */
-    color: #00aa00;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 5px;
-    text-align: left;
+  .turf-nav-items {
+    margin-left: 5%;
+    width: 95%;
   }
-  .turf-nav-button:hover { color: #637b35; }
+  .turf-active-menu-items {
+    display: block;
+    margin-left: 5%;
+    width: 95%;
+  }
+  .turf-inactive-menu-items {
+    display: none;
+    margin-left: 5%;
+    width: 95%;
+  }
+
   .turf-nav-button,
   .turf-nav-link {
-    /* border: 1px solid #81c343; */
+    background-color: #ffffff;
     border: 1px solid #00aa00;
     border-top: none;
-    /* color: #81c343; */
     color: #00aa00;
     font-size: 15px;
     font-weight: bold;
-    text-align: left;
     padding: 5px;
     text-align: left;
+    width: 100%;
   }
+  .turf-nav-button:hover { color: #637b35; }
 
   #turf-irrigation a:link,
   #turf-temperature a:link,

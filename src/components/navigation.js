@@ -15,28 +15,39 @@ class InactiveMenuTitle extends React.Component {
   }
 }
 
+
 @inject("stores")
 @observer
 class DiseaseRiskMenu extends React.Component {
 
   clickHandler(model_name) {
-      let content_keys = { component:"threats", contentModel:model_name };
-      this.props.stores.appstore.updateContentPane(content_keys);
+    let content_keys = { component:"dashboard", contentGroup:'threats', contentModel:model_name };
+    this.props.stores.appstore.updateContentPane(content_keys);
   }
 
   render() {
-    return (
-      <div className="turf-active-menu">
-        <div className="turf-active-menu-title">{this.props.title}</div>
-        <div id="turf-diseases" className="turf-nav-items">
-          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, "anthrac")}>Anthracnose</button>
-          <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, "bpatch")}>Brown Patch</button>
-          <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dspot")}>Dollarspot</button>
-          <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, "pblight")}>Pythium Blight</button>
+    console.log("DiseaseRiskMenu.render active = " + this.props.active)
+
+    if (this.props.active === true) {
+      return (
+        <div key="disease-active" className="turf-active-menu">
+          <div className="turf-active-menu-title">Disease Risk</div>
+          <div id="turf-diseases" className="turf-active-menu-items">
+            <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, "anthrac")}>Anthracnose</button>
+            <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, "bpatch")}>Brown Patch</button>
+            <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dspot")}>Dollarspot</button>
+            <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, "pblight")}>Pythium Blight</button>
+          </div>
         </div>
-      </div>
+      );
+    } else {
+      return (
+        <div key="disease-inactive" className="turf-inactive-menu">
+          <div className="turf-inactive-menu-title">Disease Risk</div>
+        </div>
       );
     }
+  }
 }
 
 
@@ -45,8 +56,8 @@ class DiseaseRiskMenu extends React.Component {
 class TurfDevelopmentMenu extends React.Component {
   
   clickHandler(model_name) {
-      let content_keys = { component:"controls", contentModel:model_name };
-      this.props.stores.appstore.updateContentPane(content_keys);
+    let content_keys = { component:"dashboard", contentGroup:'controls', contentModel:model_name, content_key:null };
+    this.props.stores.appstore.updateContentPane(content_keys);
   }
 
   render() {
@@ -62,16 +73,27 @@ class TurfDevelopmentMenu extends React.Component {
     }
 }
 
+
+@inject("stores")
 class TurfIrrigationMenu extends React.Component {
+
+  clickHandler(content) {
+    let content_keys = { component:"maps", contentGroup:'external', contentModel:'irrigate', contentKey:content };
+    this.props.stores.appstore.updateContentPane(content_keys);
+  }
+
   render() {
     return (
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-irrigation" className="turf-nav-items">
-          <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/rainfall.html" target="_blank" rel="noopener noreferrer">Last Week's Rainfall</a></div>
-          <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/pet.html" target="_blank" rel="noopener noreferrer">Evapotranspiration</a></div>
-          <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/moisture.html" target="_blank" rel="noopener noreferrer">Moisture Deficit</a></div>
-          <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/topsoil.html" target="_blank" rel="noopener noreferrer">USDA Topsoil Moisture</a></div>
+          <button id="rainfall" className="turf-nav-button" onClick={this.clickHandler.bind(this, "rainfall")}>Last Week's Rainfall</button>
+          <button id="evapot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "evapot")}>Evapotranspiration</button>
+          <button id="moisdef" className="turf-nav-button" onClick={this.clickHandler.bind(this, "moisdef")}>Moisture Deficit Last 7 Days</button>
+          <button id="moisdefcst" className="turf-nav-button" onClick={this.clickHandler.bind(this, "moisdefcst")}>Moisture Deficit 3-Day Forecast</button>
+          <button id="soilmoist" className="turf-nav-button" onClick={this.clickHandler.bind(this, "soilmoist")}>USDA Topsoil Moisture - Currrent</button>
+          <button id="soilcomp5" className="turf-nav-button" onClick={this.clickHandler.bind(this, "soilcomp5")}>USDA Topsoil Moisture - Currrent vs 5-year Mean</button>
+          <button id="soilcomp10" className="turf-nav-button" onClick={this.clickHandler.bind(this, "soilcomp10")}>USDA Topsoil Moisture - Currrent vs 10-year Mean</button>
         </div>
       </div>
       );
@@ -83,8 +105,14 @@ class TurfIrrigationMenu extends React.Component {
 @observer
 class TurfTemperatureMenu extends React.Component {
 
-  clickHandler(model_name) {
-      let content_keys = { component:"threats", contentModel:model_name };
+  clickHandler(content_type) {
+      let content_keys = { };
+      if (content_type === 'hstress') {
+        content_keys = { component:"dashboard", contentGroup:"threats", contentModel:"hstress", contentKey:null }
+      } else {
+        let content = content_type.split('.')
+        content_keys = { component:"maps", contentGroup:"external", contentModel:content[0], contentKey:content[1] }
+      }
       this.props.stores.appstore.updateContentPane(content_keys);
   }
 
@@ -93,16 +121,42 @@ class TurfTemperatureMenu extends React.Component {
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-temperature" className="turf-nav-items">
-          <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/degreedays.html" target="_blank" rel="noopener noreferrer">GDD</a></div>
-          <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, "hstress")}>Heat Stress Index</button>
+          <button id="hstress" className="turf-nav-button" onClick={this.clickHandler.bind(this, "hstress")}>Heat Stress Index</button>
           <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/frost.html" target="_blank" rel="noopener noreferrer">Frost Occurrence</a></div>
-          <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/soiltemp.html" target="_blank" rel="noopener noreferrer">Soil Temperature</a></div>
-          <div className="turf-nav-link"><a href="http://www.nrcc.cornell.edu/industry/grass/html/temps.html" target="_blank" rel="noopener noreferrer">Temperature Departure</a></div>
+          <button id="tempdepart" className="turf-nav-button" onClick={this.clickHandler.bind(this, "temperature.departure")}>Temperature Departure</button>
+          <button id="soiltemp" className="turf-nav-button" onClick={this.clickHandler.bind(this, "temperature.soil2in")}>Soil Temperature</button>
         </div>
       </div>
       );
     }
 }
+
+
+@inject("stores")
+@observer
+class TurfGDD50Menu extends React.Component {
+
+  clickHandler(content_type) {
+    let content = content_type.split('.')
+    let content_keys = { component:"maps", contentGroup:"external", contentModel:content[0], contentKey:content[1] }
+    this.props.stores.appstore.updateContentPane(content_keys);
+  }
+
+  render() {
+    return (
+      <div className="turf-active-menu">
+        <div className="turf-active-menu-title">{this.props.title}</div>
+        <div id="turf-temperature" className="turf-nav-items">
+          <button id="gdd50last7" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.last7days")}>Accumulation over last 7 days</button>
+          <button id="gdd50fcast" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.wgddfcst")}>Accumulation  days</button>
+          <button id="gdd50difd" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.sgdifd")}>Accumulation difference over last year (days)</button>
+          <button id="gdd50difg" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.sgdifg")}>Accumulation difference over last year (GDD)</button>
+        </div>
+      </div>
+      );
+    }
+}
+
 
 class TurfUsefulLinksMenu extends React.Component {
   render() {
@@ -121,6 +175,7 @@ class TurfUsefulLinksMenu extends React.Component {
       );
     }
 }
+
 
 class TurfRadarMenu extends React.Component {
   render() {
@@ -150,6 +205,7 @@ class TurfRadarMenu extends React.Component {
     }
 }
 
+
 @inject("stores")
 @observer
 class TurfNavigation extends React.Component {
@@ -159,6 +215,9 @@ class TurfNavigation extends React.Component {
   }
 
   divClickHandler(menu_type) {
+    console.log("NAVIGATION.divClickHandler")
+    console.log(" prev menu = " + this.state.selectedMenu)
+    console.log(" next menu = " + menu_type)
     if (this.state.selectedMenu === menu_type) {
       this.setState({'selectedMenu': null,});
     } else {
@@ -173,6 +232,9 @@ class TurfNavigation extends React.Component {
 
   render() {
     let selectedMenu = this.state.selectedMenu;
+    console.log('NAVIGATION selectedMenu = ' + selectedMenu)
+    console.log('NAVIGATION selected === disease : ' + (selectedMenu === "disease"))
+    console.log('NAVIGATION selected !== disease : ' + (selectedMenu !== "disease"))
 
     return (
       <div className="turf-navigation">
@@ -180,8 +242,8 @@ class TurfNavigation extends React.Component {
           <div className="turf-nav-home" onClick={this.homeClickHandler.bind(this)}>Turf Home Page</div>
 
           <div className="turf-nav-menu" onClick={this.divClickHandler.bind(this, "disease")}>
-            { selectedMenu === "disease" && <DiseaseRiskMenu title="Disease Risk"/> }
-            { selectedMenu !== "disease" && <InactiveMenuTitle title="Disease Risk"/> }
+            { selectedMenu === "disease" && <DiseaseRiskMenu active={true} /> }
+            { selectedMenu !== "disease" && <DiseaseRiskMenu active={false} /> }
           </div>
 
           <div className="turf-nav-menu" onClick={this.divClickHandler.bind(this, "development")}>

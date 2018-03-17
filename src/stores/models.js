@@ -1,8 +1,6 @@
 import { observable, computed, action } from 'mobx';
 
 export default class TurfDataModels {
-  defaults;
-  models;
   constructor() {
 
     this.defaults = {
@@ -186,6 +184,9 @@ export default class TurfDataModels {
         },
       },
     }
+
+    this.model_keys = Object.getOwnPropertyNames(this.models);
+    console.log('VALID MODEL KEYS : ' + this.model_keys)
   }
 
   @observable active_model = null;
@@ -199,6 +200,9 @@ export default class TurfDataModels {
   @computed get modelName() { return this.model_name }
   @computed get model() { return this.active_model }
 
+  isValidModel = (model_name) => {
+      return this.model_keys.includes(model_name)
+  }
   modelFromName = (model_name) => { return this.models[model_name] }
 
   urlTemplate = (model_name, url_type) => {
