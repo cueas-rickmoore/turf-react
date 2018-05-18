@@ -1,40 +1,66 @@
 import { observable, action } from 'mobx';
+import axios from "axios";
 
 export default class AppStore {
     stores;
+    model_groups;
+    root_data_url;
     valid_components;
-    valid_models;
     constructor(appstores) {
-      this.stores = appstores;
       this.model_groups = ['controls','threats'];
+      /* this.root_data_url = 'http://localhost:6969/app_data/YEAR/'; */
+      this.root_data_url = '/app_data/YEAR/';
+      this.stores = appstores;
       this.valid_components = ['dashboard', 'home', 'maps',
                                'controlboard', 'controlmap', 'threatboard', 'threatmap', 
                                'externmap', 'controls', 'threats'];
     }
 
     downloadModelContent(content_model) {
-      let url_template = this.stores.models.urlTemplate(content_model,'data');
+      let url_template = null;
+      if (content_model === null) {
+          url_template = this.root_data_url + this.stores.models.urlTemplate(this.content_model,'data');
+      } else { 
+          url_template = this.root_data_url + this.stores.models.urlTemplate(content_model,'data');
+      }
+      /* let url_template = this.stores.models.urlTemplate(content_model,'data'); */
       let url = url_template.replace(new RegExp('YEAR', 'g'),this.stores.datestore.season.year.toString())
                             .replace('GRIDNODE', this.stores.location.node);
-      console.log('Turf AppStore.downloadModelContent ... fetching data from url :\n    ' + url);
+      console.log('Turf AppStore.downloadModelContent from url :\n    ' + url);
+
+      /*
+      axios.get(url, { mode:'cors',
+                       headers: {'Access-Control-Allow-Origin': 'localhost:3000',
+                                 'Content-Type': 'application/json'}
+               })
+           .then((response) => response.json())
+           .then((json) => {
+               console.log('Turf AppStore download complete ' + json)
+               this.updateModelContent(json);
+      });
+      window.fetch(url, { mode:'cors', headers: {'Access-Control-Allow-Origin': 'localhost:3000',
+                          'Content-Type': 'application/json'} } )
+      */
       window.fetch(url)
             .then((response) => response.json())
             .then((json) => {
                 console.log('Turf AppStore download complete ' + json.group + '.' + json.name)
                 this.updateModelContent(json);
             });
-            /*
-            .catch(err => {
-               console.log("failed to load data for " + content_model);
-               console.log(" download error : \n" + err.toString())
-            });
-            */
     }
 
     @observable contentComponent = 'home';
     @observable contentGroup = null;
     @observable contentModel = null;
     @observable contentKey = null;
+
+    urlTemplate(model, data_type) {
+      if (typeof model === 'string') {
+        return this.root_data_url + this.props.stores.models.urlTemplate(model, data_type)
+      } else { 
+          return this.root_data_url + model.urls[data_type];
+      }
+    }
 
     @action updateContentPane(request) {
       console.log('Turf AppStore.updateContentPane change requested');

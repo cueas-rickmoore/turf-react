@@ -3,8 +3,6 @@ import { inject, observer } from 'mobx-react';
 
 import "../styles/dashboard.css";
 import "../styles/mappane.css";
-import DashboardDescription from '../components/dbdescription.js';
-import DashboardLocation from '../components/dblocation.js';
 import ExternalMapPane from '../components/external/mappane.js';
 import ThreatMapPane from '../components/threats/mappane.js';
 import TreatmentMapPane from '../components/controls/mappane.js';

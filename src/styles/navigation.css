@@ -49,6 +49,7 @@
   .turf-nav-home,
   .turf-inactive-menu-title,
   .turf-nav-menu-title,
+  .nav-location-button,
   .turf-nav-weather {
     background-color: #ffffff;
     /* border: 1px solid #81c343; */
@@ -61,10 +62,15 @@
     padding: 5px 10px;
     text-align: left;
   }
+
   .turf-nav-home:hover,
   .turf-inactive-menu-title:hover,
   .turf-nav-menu-title:hover,
+  .nav-location-button:hover,
   .turf-nav-weather:hover { color: #637b35;  }
+
+  .turf-nav-weather a { color: #00aa00; }
+  .turf-nav-weather a:hover { color: #637b35; }
 
   .turf-active-menu-title {
     background-color: #00aa00;
@@ -138,9 +144,9 @@
     color: #00aa00;
     font-size: 15px;
     font-weight: bold;
-    margin-left: 6px;
+    /* margin-left: 6px; */
     margin-top: 2em;
-    padding-left: 8px;
+    /* padding-left: 8px; */
     text-align: left;
     width: 100%;
   }

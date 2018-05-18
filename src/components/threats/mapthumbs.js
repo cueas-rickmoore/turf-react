@@ -16,9 +16,11 @@ class ThreatMapThumbnail extends React.Component {
     let the_date = this.props.the_date;
 
     let label = the_date.format('MM/DD/YY');
-    let date_string = the_date.format('YYYYMMDD');
+    let url_date = the_date.format('YYYYMMDD');
     let alt = 'link to ' + model.full_name + ' map for ' + the_date.format('MM/DD/YYYY');
-    let url = model.urls.thumbs.replace('YEAR', the_date.year().toString()).replace('DATESTR', date_string);
+    let url = this.props.stores.appstore.urlTemplate(model,'thumbs')
+                  .replace('YEAR', the_date.format('Y'))
+                  .replace('DATESTR', url_date);
 
     return(
       <div className="map-thumb" onClick={this.clickHandler.bind(this, model, the_date)}>

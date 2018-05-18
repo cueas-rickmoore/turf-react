@@ -3,15 +3,17 @@ import { inject, observer } from 'mobx-react';
 
 @inject("stores")
 class TreatmentThumbnail extends React.Component {
-  clickHandler(the_date, model, treatment) {
+
+  clickHandler(the_date, model_name, treatment_key) {
     this.props.stores.datestore.updateMapDate(the_date);
-    let component = { component:'maps', contentGroup:'controls', contentModel:model.name, contentKey:treatment }
+    let component = { component:'maps', contentGroup:'controls', contentModel:model_name, contentKey:treatment_key }
     this.props.stores.appstore.updateContentPane(component);
   }
 
   render() {
     let model = this.props.stores.models.model;
-    let treatment = model.treatments[this.props.treatment];
+    let treatment_key = this.props.treatment_key;
+    let treatment = model.treatments[treatment_key];
 
     let the_date = this.props.the_date;
     let alt_date = the_date.format('MMMM Do Y');
@@ -21,12 +23,13 @@ class TreatmentThumbnail extends React.Component {
     let template = model.dashboard.altString;
     let alt = 'link to ' + template.replace('ALTDATE',alt_date)
                                    .replace('TREATMENT',treatment.fullname);
-    let url = model.urls.thumbs.replace('DATESTR',the_date.format('YMMDD'))
-                               .replace(/TREATMENT/gi,treatment.fullname)
-                               .replace('YEAR',the_date.format('Y'));
+    let url = this.props.stores.appstore.urlTemplate(model,'thumbs')
+                  .replace('DATESTR',the_date.format('YMMDD'))
+                  .replace(/TREATMENT/gi,treatment.fullname)
+                  .replace('YEAR',the_date.format('Y'));
 
-    return(
-      <div key={'tmb' + key_date} className="thumb" onClick={this.clickHandler.bind(this, the_date, model, this.props.treatment)}>
+    return (
+      <div key={'tmb' + key_date} className="thumb" onClick={this.clickHandler.bind(this, the_date, model.name, treatment_key)}>
         <img key={'tmbimg' + key_date} className="thumbnail" src={url} alt={alt} />
         <br/><span key={'tmblbl' + key_date} className="thumbnail-date">{label}</span>
       </div>
@@ -40,7 +43,8 @@ class TreatmentThumbnails extends React.Component {
 
   render() {
     let model = this.props.stores.models.model;
-    let treatment = this.props.treatment;
+    let treatment_key = this.props.treatment_key;
+    let treatment_name = model.treatments[treatment_key].fullname;
 
     let start_date = this.props.stores.datestore.firstThumbDate.clone();
     let thumb_dates = [start_date, ];
@@ -50,10 +54,10 @@ class TreatmentThumbnails extends React.Component {
 
     return (
       <div className="turf-treatment-group">
-        <div className="turf_treatment-name">{treatment} Maps</div>
+        <div className="turf_treatment-name">{treatment_name} Maps</div>
         <div className="turf-dashboard-thumbnails">
           { thumb_dates.map(function(the_date,i){
-            return <TreatmentThumbnail the_date={the_date} treatment={treatment} />;
+            return <TreatmentThumbnail the_date={the_date} treatment_key={treatment_key} />;
           }) }
         </div>
       </div>
@@ -67,12 +71,11 @@ class ControlsDashboardThumbs extends React.Component {
 
   render() {
     let model = this.props.stores.models.model;
-    console.log('ControlDashboardThumbnails sequence ' + model.sequence)
 
     return (
       <div className="turf-dashboard-thumbnails">
         { model.sequence.map(function(name,i){
-          return <TreatmentThumbnails treatment={name} />;
+          return <TreatmentThumbnails treatment_key={name} />;
         }) }
       </div>
     )

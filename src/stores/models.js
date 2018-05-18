@@ -32,9 +32,9 @@ export default class TurfDataModels {
         group: "threats",
         name: 'anthrac',
         urls: {
-          data: '/data/YEAR/json/Anthracnose/YEAR-GRIDNODE-Anthracnose-Risk.json',
-          maps: '/data/YEAR/maps/Anthracnose/DATESTR-Anthracnose-Risk-Map.png',
-          thumbs: '/data/YEAR/thumbs/Anthracnose/DATESTR-Anthracnose-Risk-Thumbnail.png',
+          data: 'json/Anthracnose/YEAR-GRIDNODE-Anthracnose-Risk.json',
+          maps: 'maps/Anthracnose/DATESTR-Anthracnose-Risk-Map.png',
+          thumbs: 'thumbs/Anthracnose/DATESTR-Anthracnose-Risk-Thumbnail.png',
         },
       },
       bpatch: { 
@@ -53,9 +53,9 @@ export default class TurfDataModels {
         },
         name: 'bpatch',
         urls: {
-          data: '/data/YEAR/json/Brown-Patch/YEAR-GRIDNODE-Brown-Patch-Risk.json',
-          maps: '/data/YEAR/maps/Brown-Patch/DATESTR-Brown-Patch-Risk-Map.png',
-          thumbs: '/data/YEAR/thumbs/Brown-Patch/DATESTR-Brown-Patch-Risk-Thumbnail.png',
+          data: 'json/Brown-Patch/YEAR-GRIDNODE-Brown-Patch-Risk.json',
+          maps: 'maps/Brown-Patch/DATESTR-Brown-Patch-Risk-Map.png',
+          thumbs: 'thumbs/Brown-Patch/DATESTR-Brown-Patch-Risk-Thumbnail.png',
         },
       },
       dandelion: {
@@ -90,9 +90,9 @@ export default class TurfDataModels {
           },
         },
         urls: {
-          data:'/data/YEAR/json/Dandelion/YEAR-GRIDNODE-Dandelion.json',
-          maps:'/data/YEAR/maps/Dandelion/TREATMENT/DATESTR-TREATMENT-Dandelion-Control-Map.png',
-          thumbs:'/data/YEAR/thumbs/Dandelion/TREATMENT/DATESTR-TREATMENT-Dandelion-Control-Thumbnail.png',
+          data:'json/Dandelion/YEAR-GRIDNODE-Dandelion.json',
+          maps:'maps/Dandelion/TREATMENT/DATESTR-TREATMENT-Dandelion-Control-Map.png',
+          thumbs:'thumbs/Dandelion/TREATMENT/DATESTR-TREATMENT-Dandelion-Control-Thumbnail.png',
         },
       },
       dspot: { 
@@ -107,9 +107,9 @@ export default class TurfDataModels {
         group: "threats",
         name: 'dspot',
         urls: {
-          data:'/data/YEAR/json/Dollarspot/YEAR-GRIDNODE-Dollarspot-Risk.json',
-          maps:'/data/YEAR/maps/Dollarspot/DATESTR-Dollarspot-Risk-Map.png',
-          thumbs:'/data/YEAR/thumbs/Dollarspot/DATESTR-Dollarspot-Risk-Thumbnail.png',
+          data:'json/Dollarspot/YEAR-GRIDNODE-Dollarspot-Risk.json',
+          maps:'maps/Dollarspot/DATESTR-Dollarspot-Risk-Map.png',
+          thumbs:'thumbs/Dollarspot/DATESTR-Dollarspot-Risk-Thumbnail.png',
         },
       },
       hstress: { 
@@ -124,9 +124,9 @@ export default class TurfDataModels {
         group: "threats",
         name: 'hstress',
         urls: {
-          data:'/data/YEAR/json/Heat-Stress/YEAR-GRIDNODE-Heat-Stress-Index.json',
-          maps:'/data/YEAR/maps/Heat-Stress/DATESTR-Heat-Stress-Index-Map.png',
-          thumbs:'/data/YEAR/thumbs/Heat-Stress/DATESTR-Heat-Stress-Index-Thumbnail.png',
+          data:'json/Heat-Stress/YEAR-GRIDNODE-Heat-Stress-Risk.json',
+          maps:'maps/Heat-Stress/DATESTR-Heat-Stress-Risk-Map.png',
+          thumbs:'thumbs/Heat-Stress/DATESTR-Heat-Stress-Risk-Thumbnail.png',
         },
       },
       pblight: { 
@@ -141,9 +141,9 @@ export default class TurfDataModels {
         group: "threats",
         name: 'pblight',
         urls: {
-          data:'/data/YEAR/json/Pythium-Blight/YEAR-GRIDNODE-Pythium-Blight-Risk.json',
-          maps:'/data/YEAR/maps/Pythium-Blight/DATESTR-Pythium-Blight-Risk-Map.png',
-          thumbs:'/data/YEAR/thumbs/Pythium-Blight/DATESTR-Pythium-Blight-Risk-Thumbnail.png',
+          data:'json/Pythium-Blight/YEAR-GRIDNODE-Pythium-Blight-Risk.json',
+          maps:'maps/Pythium-Blight/DATESTR-Pythium-Blight-Risk-Map.png',
+          thumbs:'thumbs/Pythium-Blight/DATESTR-Pythium-Blight-Risk-Thumbnail.png',
         },
       },
       seedhead: {
@@ -178,9 +178,9 @@ export default class TurfDataModels {
             },
         },
         urls: {
-          data: '/data/YEAR/json/Seedhead/YEAR-GRIDNODE-Seedhead.json',
-          maps: '/data/YEAR/maps/Seedhead/TREATMENT/DATESTR-TREATMENT-Seedhead-Control-Map.png',
-          thumbs: '/data/YEAR/thumbs/Seedhead/TREATMENT/DATESTR-TREATMENT-Seedhead-Control-Thumbnail.png',
+          data: 'json/Seedhead/YEAR-GRIDNODE-Seedhead.json',
+          maps: 'maps/Seedhead/TREATMENT/DATESTR-TREATMENT-Seedhead-Control-Map.png',
+          thumbs: 'thumbs/Seedhead/TREATMENT/DATESTR-TREATMENT-Seedhead-Control-Thumbnail.png',
         },
       },
     }

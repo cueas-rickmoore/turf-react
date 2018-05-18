@@ -18,7 +18,7 @@ class ThreatDashboardThumbnail extends React.Component {
     let label = the_date.format('MM/DD/YY');
 
     let alt = 'link to ' + model.dashboard.altString.replace('ALTDATE',alt_date);
-    let url = model.urls.thumbs.replace('YEAR',the_date.format('Y')).replace('DATESTR',date_string);
+    let url = this.props.stores.appstore.urlTemplate(model,'thumbs').replace('YEAR',the_date.format('Y')).replace('DATESTR',date_string);
     if (content_key) {
         alt = alt.replace(/CONTENTKEY/gi, content_key);
         url = url.replace(/CONTENTKEY/gi, content_key);

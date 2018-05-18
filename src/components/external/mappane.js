@@ -18,8 +18,9 @@ class ExternalMapPane extends React.Component {
 
     return (
       <div>
-        <div id="turf-map-pane">
-          <div id="turf-map-image">
+        <div id="external-map-pane">
+          <div className="external-map-title" >Irrigation Information</div>
+          <div id="external-map-image">
             <img className="fullsizemap" src={map_spec.map_url} alt={map_spec.description} />
           </div>
         </div>

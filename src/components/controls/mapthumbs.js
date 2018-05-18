@@ -17,13 +17,12 @@ class TreatmentMapThumbnail extends React.Component {
     let label = the_date.format('MM/DD/Y');
     let url_date = the_date.format('YMMDD');
 
-    let alt = model.dashboard.altString;
-    let url = model.urls.thumbs;
-    alt = alt.replace('ALTDATE',alt_date)
-             .replace('/TREATMENT/gi',this.props.treatment);
-    url = url.replace('YEAR', the_date.format('Y'))
-             .replace('DATESTR', url_date)
-             .replace(/TREATMENT/gi, this.props.treatment);
+    let alt = model.dashboard.altString.replace('ALTDATE',alt_date)
+                   .replace('/TREATMENT/gi',this.props.treatment);
+    let url = this.props.stores.appstore.urlTemplate(model,'thumbs')
+                  .replace('YEAR', the_date.format('Y'))
+                  .replace('DATESTR', url_date)
+                  .replace(/TREATMENT/gi, this.props.treatment);
 
     let div_key = 'tmb' + url_date;
     let img_key = 'tmbimg' + url_date;
@@ -55,15 +54,44 @@ class TreatmentMapThumbnails extends React.Component {
         let the_date = start_date.clone().add(i, 'd');
         if (the_date.diff(map_date, 'd') !== 0) { the_dates.push(the_date); }
     }
+    let groups = [ ]; 
+    if (the_dates.length > 3) {
+      groups.push(the_dates.slice(0,3));
+      if (the_dates.length <= 6) {
+        groups.push(the_dates.slice(3));
+      } else {
+        groups.push(the_dates.slice(3,6));
+        groups.push(the_dates.slice(6));
+      }
+    }
+    if (groups.length > 0) {
+      return (
+        <div className="turf-map-thumbnails">
+           { groups.map( function(group,g) {
+              return (
+                <div className="turf-thumbnail-row">
+                { group.map( function(the_date,i) {
+                  let key_string = 'mapthumb' + the_date.format('YMMDD');
+                  return <TreatmentMapThumbnail key={key_string} the_date={the_date} treatment={treatment}/>;
+                  } )
+                }
+                </div>
+              ) }
+           ) }
+        </div>
+      )
 
-    return (
-      <div className="turf-map-thumbnails">
-        { the_dates.map(function(the_date,i) {
-          let key_string = 'mapthumb' + the_date.format('YMMDD');
-          return <TreatmentMapThumbnail key={key_string} the_date={the_date} treatment={treatment}/>;
-        }) }
-      </div>
-    )
+    } else {
+      return (
+        <div className="turf-map-thumbnails">
+          { the_dates.map( function(the_date,i) {
+            let key_string = 'mapthumb' + the_date.format('YMMDD');
+            return <TreatmentMapThumbnail key={key_string} the_date={the_date} treatment={treatment}/>;
+            } )
+          }
+        </div>
+      )
+    }
   }
 }
 

@@ -53,15 +53,7 @@ class App extends React.Component {
             { appstore.contentComponent === 'home' && <TurfHomeContentPane /> }
             { appstore.contentComponent === 'dashboard' &&
               datastore.data && <TurfModelDashboard />  }
-            { appstore.contentComponent === 'maps' &&
-              appstore.contentGroup === 'control' &&
-              datastore.data && <TurfMapContentPane />  }
-            { appstore.contentComponent === 'maps' &&
-              appstore.contentGroup === 'threats' &&
-              datastore.data && <TurfMapContentPane />  }
-
             { appstore.contentComponent === 'maps' && <TurfMapContentPane /> }
-
             { !root_components.includes(appstore.contentComponent) && <UnsupportedComponentType /> }
             <div>&nbsp;</div>
           </div>

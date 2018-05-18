@@ -1,5 +1,5 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
+import { inject } from 'mobx-react';
 
 @inject("stores")
 class HomePageMap extends React.Component {
@@ -19,13 +19,15 @@ class HomePageMap extends React.Component {
     let url_date = map_date.format('YMMDD');
 
     let alt = model.dashboard.altString.replace('ALTDATE',alt_date);
-    let url = model.urls.maps.replace('YEAR', map_date.format('Y'))
-                             .replace('DATESTR', url_date);
+    let url = this.props.stores.appstore.urlTemplate(model,'maps')
+                  .replace('YEAR', map_date.format('Y'))
+                  .replace('DATESTR', url_date);
+    console.log('HomePageMap url : ' + url)
 
     return (
       <div className="home-map-container">
         <img className="home-page-map" src={url} alt={alt} onClick={this.clickHandler.bind(this)} />
-        <div className="home-map-label">Click map view dashboard for {model_name}</div>
+        <div className="home-map-label">Click map to view dashboard for {model_name}</div>
       </div>
     )
   }

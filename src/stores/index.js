@@ -15,13 +15,14 @@ class Stores {
     text;
 
     constructor() {
+        this.datestore = new TurfDateStore(this);
         this.models = new TurfDataModels();
         this.external = new TurfExternalMapStore();
         this.location = new TurfLocationStore();
         this.text = new TurfTextStore();
-        this.datestore = new TurfDateStore(this);
         this.datastore = new TurfDataStore(this);
         this.appstore = new AppStore(this);
+
     }
 
 }

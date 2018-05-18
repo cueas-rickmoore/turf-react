@@ -5,25 +5,50 @@ export default class TurfDateStore {
     stores;
     constructor(appstores) {
       this.stores = appstores;
+      /* let doi = this.dateFromArray([moment().year(), 4, 12]); */
+      let doi = moment(new Date());
+      this.initializeSeason(doi.year());
+      this.initializeDates(doi);
     }
+
     season_span = {
         endDay: [10,31], /* fixed value */
         startDay: [3,1], /* fixed value */
     }
+
     dateFromArray = (date_array) => {
         return moment([date_array[0], date_array[1]-1, date_array[2]]).startOf('day')
     }
 
     @observable season = {
-        year: 2017,
+    /*    year: 2017,
         dataStart: this.dateFromArray([2017,3,1]),
         endDate: this.dateFromArray([2017,10,31]),
         startDate: this.dateFromArray([2017,3,1]),
+    */
     }
     @computed get seasonDates() { return this.season }
     @computed get seasonEndDate() { return this.season.endDate }
     @computed get seasonStartDate() { return this.season.startDate }
     @computed get dataStartDate() { return this.season.dataStart }
+
+    initializeSeason(new_year) {
+        let year = new_year;
+        if (year === null) { year = moment().year(); }
+        let start_date = this.dateFromArray([year, ...this.season_span.startDay]);
+        this.season = {
+            dataStart: start_date,
+            endDate: this.dateFromArray([year, ...this.season_span.endDay]),
+            startDate: start_date, 
+            year: year
+        }
+        console.log('in initializeSeason :')
+        console.log('      year : ' + this.season.year)
+        console.log(' dataStart : ' + this.season.dataStart.format('MM/DD/YYYY'))
+        console.log(' startDate : ' + this.season.startDate.format('MM/DD/YYYY'))
+        console.log('   endDate : ' + this.season.endDate.format('MM/DD/YYYY'))
+    }
+
     updateSeason(json) {
         let start_date = this.dateFromArray(json.dates.seasonStart);
         if (start_date.year !== this.season.year) {
@@ -34,8 +59,13 @@ export default class TurfDateStore {
             }
         }
         this.season.dataStart = start_date;
-    }
 
+        console.log('in updateSeason :')
+        console.log('      year : ' + this.season.year)
+        console.log(' dataStart : ' + this.season.dataStart.format('MM/DD/YYYY'))
+        console.log(' startDate : ' + this.season.startDate.format('MM/DD/YYYY'))
+        console.log('   endDate : ' + this.season.endDate.format('MM/DD/YYYY'))
+    }
 
     @observable dates = {
         doi: this.dateFromArray([2017,7,13]),
@@ -44,6 +74,34 @@ export default class TurfDateStore {
         firstValid: this.dateFromArray([2017,6,4]), 
         lastValid: this.dateFromArray([2017,10,31]), 
     }
+    initializeDates(new_doi) {
+        let doi = new_doi;
+        if (doi === null) {
+            let today = moment(new Date());
+            let last_valid = today.add(5, 'days');
+            this.dates = {
+                doi: today.subtract(1, 'days'),
+                fcastEnd: last_valid,
+                fcastStart: today,
+                firstValid: this.dateFromArray([today.year, ...this.season_span.startDay]),
+                lastValid: last_valid
+            }
+        } else {
+            let last_valid = moment(doi);
+            last_valid.add(6, 'days');
+            let fcast_start = moment(doi);
+            fcast_start.add(1, 'days');
+            this.dates = {
+                doi: doi,
+                fcastEnd: last_valid,
+                fcastStart: fcast_start,
+                firstValid: this.dateFromArray([doi.year, ...this.season_span.startDay]),
+                lastValid: last_valid
+            }
+        }
+    }
+
+
     @computed get modelDates() { return this.dates }
 
     indexForDate = (the_date) => { return the_date.diff(this.dates.firstValid,'d'); }
@@ -71,7 +129,7 @@ export default class TurfDateStore {
             if (need_first_valid) {
                 /* firstValid was not in json, set it to seasonStart */
                 this.dates.firstValid = this.dateFromArray(json.dates.seasonStart)
-                console.log('    set date.firstValid to ' + this.dates.firstValidthe_date.format('MM/DD/YYYY'));
+                console.log('    set date.firstValid to ' + this.dates.firstValid.format('MM/DD/YYYY'));
             }
         }
     }
@@ -98,31 +156,15 @@ export default class TurfDateStore {
 
     @action updateDboardIndexes() {
         let model = this.stores.models.model;
-        let fcast_idx = 999;
-        let first_idx = 0;
-        let first_valid = this.firstValidDate;
-        let last_valid = this.lastValidDate;
-        let last_idx = this.indexForDate(last_valid);
-        if (this.dates.doi) {
-            let doi = this.dates.doi.diff(first_valid,'d');
-            first_idx = doi - 3;
-            fcast_idx = doi + 1;
-            last_idx = first_idx + model.dashboard.table.columns - 1;
-        } else {
-            let fcast_end = this.fcastStartEnd;
-            let fcast_start = this.fcastStartStart;
-            if (fcast_start && fcast_start <= last_valid) {
-                fcast_idx = this.indexForDate(fcast_start);
-                if (fcast_end <= last_valid) {
-                    last_idx = this.indexForDate(fcast_end);
-                }
-            }
-            first_idx = last_idx - model.dashboard.table.columns + 1;
-        }
+        /* let first_valid = this.firstValidDate; */
+
+        /* NEED TO ADD CODE TO BLOCK FIRST FROM BEING EARLIER THAN SEASON START */
+        let last_idx = this.indexForDate(this.fcastEndDate);
+
         this.dboard_date_indexes = {
-            first: first_idx,
+            first: (last_idx - model.dashboard.table.columns) + 1,
             last: last_idx,
-            fcast: fcast_idx,
+            fcast: this.indexForDate(this.fcastStartDate),
         }
     }
 

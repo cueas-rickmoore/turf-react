@@ -1,4 +1,3 @@
-import { observable, computed, action } from 'mobx';
 
 export default class TurfExternalMapStore {
 
@@ -82,6 +81,10 @@ export default class TurfExternalMapStore {
         departure:{
           description:'Temperature departure (°F)',
           map_url:'http://www.nrcc.cornell.edu/dyn_images/grass/wtdpt.png',
+        },
+        frost:{
+          description:'Frost Risk Map',
+          map_url:'http://www.nrcc.cornell.edu/dyn_images/grass/frfz.png',
         },
         soil2in:{
           description:'Temperature (°F) of the soil 2" below the surface',

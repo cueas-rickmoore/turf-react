@@ -3,9 +3,10 @@
   #turf-map-pane {
     display: flex;
     flex-direction: row;
-    flex: 0 1 length;
+    flex: 0 1 auto;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-left: 1%;
   }
 
   #turf-map-image {
@@ -14,19 +15,28 @@
     width: 88%;
   }
 
-  #turf-map-image .fullsizemap {
-    width: 100%;
-  }
+  #turf-map-image .fullsizemap { width: 100%; }
  
   .turf-map-thumbnails {
     display: flex;
     flex-direction: column;
-    flex: 0 1 length;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    margin-left: 5px;
+    justify-content: flex-start;
+    margin-right: 5px;
+    width: 10%;
+  }
+ 
+  .turf-thumbnail-row {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
     flex-wrap: wrap;
     justify-content: space-between;
     margin-left: 5px;
     margin-right: 5px;
-    width: 10%;
+    width: 100%;
   }
  
   div.map-thumb {
@@ -34,19 +44,79 @@
     margin-bottom: 5px;
   }
 
-  .map-swap-buttons {
+  .content-below-map-image {
     margin-top: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: rows;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
+  .dashboard-view-button,
   .map-swap-button {
     background-color: #33ffff;
     border: 2px solid #0000ff;
     border-radius: 5px;
-    height: 20px;
+    height: 16px;
+    font-size: 16px;
     padding: 5px;
+    margin-bottom: 5px;
   }
+  .dashboard-view-button:hover,
   .map-swap-button:hover {
     background-color: #00ff00;
     color: #006600;
   }
+  .dashboard-view-button { margin-right: 10px; }
+
+  #external-map-pane {
+    margin-left: 1%;
+    width:100%;
+  }
+
+  #external-map-image .fullsizemap {
+    width: 88%;
+    margin: auto;
+  }
+
+  .external-map-title {
+     width: 80%;
+     margin: auto;
+     padding-top: 15px;
+     padding-bottom: 10px;
+     font-size: 20px;
+     font-weight: bold;
+     text-align: center;
+     vertical-align: middle;
+  }
+
 }
+
+@media only screen and (max-width: 650px) {
+  .dashboard-view-button,
+  .map-swap-button {
+    height: 14px;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .dashboard-view-button,
+  .map-swap-button {
+    height: 12px;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 525px) {
+  .turf-map-thumbnails {
+    flex-direction: row;
+  }
+  .turf-thumbnail-row {
+    flex-direction: row;
+    flex-wrap: no-wrap;
+  }
+}
+
