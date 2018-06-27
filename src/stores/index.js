@@ -9,12 +9,21 @@ import TurfLocationStore from '../stores/location.js';
 import TurfTextStore from '../stores/textstore.js';
 
 class Stores {
+    appstore;
+    datastore;
+    datestore;
+    external;
     location;
-    modeldata;
     models;
     text;
 
-    constructor() {
+    app_root_url;
+    data_root_url;
+
+    constructor(history) {
+        this.app_root_url = process.env.REACT_APP_HOME_URL;
+        this.data_root_url = process.env.REACT_APP_DATA_URL;
+        this.history = history; 
         this.datestore = new TurfDateStore(this);
         this.models = new TurfDataModels();
         this.external = new TurfExternalMapStore();
@@ -22,11 +31,9 @@ class Stores {
         this.text = new TurfTextStore();
         this.datastore = new TurfDataStore(this);
         this.appstore = new AppStore(this);
-
     }
-
 }
 
-const stores = new Stores();
-export default stores;
+// const stores = new Stores();
+export default Stores;
 

@@ -60,10 +60,10 @@ class ControlsDashboardTable extends React.Component {
         </div>
         <table className="turf-dashboard-table" cellPadding="0" cellSpacing="0">
         <tbody>
-          { model.sequence.map(
-              function(treatment) {
-                return <DataComponent data={data} indexing={indexing} model={model} treatment={treatment}/>
-              }
+          { model.sequence.map( function(treatment,t) {
+            let key_str = 'dbtable-row-' + t;
+            return <DataComponent key={key_str} data={data} indexing={indexing} model={model} treatment={treatment}/>
+            }
           ) }
           <DashboardDates />
         </tbody>

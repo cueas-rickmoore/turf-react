@@ -4,10 +4,9 @@ import { inject, observer } from 'mobx-react';
 @inject("stores")
 class TreatmentThumbnail extends React.Component {
 
-  clickHandler(the_date, model_name, treatment_key) {
+  clickHandler(the_date, model, treatment) {
     this.props.stores.datestore.updateMapDate(the_date);
-    let component = { component:'maps', contentGroup:'controls', contentModel:model_name, contentKey:treatment_key }
-    this.props.stores.appstore.updateContentPane(component);
+    this.props.stores.appstore.uriToContentPane('maps/controls/' + model + '/' + treatment);
   }
 
   render() {
@@ -52,12 +51,14 @@ class TreatmentThumbnails extends React.Component {
         thumb_dates.push(start_date.clone().add(i, 'd'));
     }
 
+    let group_key = 'control_thumbnails_' + this.props.count; 
     return (
-      <div className="turf-treatment-group">
+      <div className="turf-treatment-group" key={group_key}>
         <div className="turf_treatment-name">{treatment_name} Maps</div>
         <div className="turf-dashboard-thumbnails">
           { thumb_dates.map(function(the_date,i){
-            return <TreatmentThumbnail the_date={the_date} treatment_key={treatment_key} />;
+            let key = 'control_thumb_' + i;
+            return <TreatmentThumbnail key={key} the_date={the_date} treatment_key={treatment_key} />;
           }) }
         </div>
       </div>
@@ -75,7 +76,8 @@ class ControlsDashboardThumbs extends React.Component {
     return (
       <div className="turf-dashboard-thumbnails">
         { model.sequence.map(function(name,i){
-          return <TreatmentThumbnails treatment_key={name} />;
+          let dbt_key = 'db-thumb-' + i;
+          return <TreatmentThumbnails key={dbt_key} count={i} treatment_key={name} />;
         }) }
       </div>
     )

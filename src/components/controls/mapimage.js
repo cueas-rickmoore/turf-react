@@ -3,25 +3,20 @@ import { inject, observer } from 'mobx-react';
 
 @inject("stores")
 class DashboardButton extends React.Component {
-  clickHandler(model_name) {
-    let component = { component:'dashboard', contentGroup:'controls', contentModel:model_name, contentKey:null }
-    this.props.stores.appstore.updateContentPane(component);
-  }
+  clickHandler(model_name) { this.props.stores.appstore.uriToContentPane('dashboard/controls/' + model_name); }
 
   render() {
     let model = this.props.stores.models.model;
     let text = "View " + model.fullname + " dashboard";
-      ;
     return <span className="dashboard-view-button" onClick={this.clickHandler.bind(this, model.name)}>{text}</span>
   }
 }
 
 @inject("stores")
 class MapButton extends React.Component {
-  clickHandler(treatment_key) {
-    let model = this.props.stores.models.model;
-    let component = { component:'maps', contentGroup:'controls', contentModel:model.name, contentKey:treatment_key }
-    this.props.stores.appstore.updateContentPane(component);
+  clickHandler(treatment) {
+    let model = this.props.stores.models.model.name;
+    this.props.stores.appstore.uriToContentPane('maps/controls/' + model + '/' + treatment);
   }
 
   render() {
@@ -29,7 +24,6 @@ class MapButton extends React.Component {
     return <span className="map-swap-button" onClick={this.clickHandler.bind(this, this.props.treatment_key)}>{text}</span>
   }
 }
-
 
 @inject("stores")
 @observer
@@ -52,9 +46,10 @@ class TreatmentMapImage extends React.Component {
                   .replace(/TREATMENT/gi, treatment.fullname);
 
     let treatments = [ ];
-    model.sequence.map(function(treatment,i) {
+    for (let i=1; i < model.sequence.length; i++) {
+      let treatment = model.sequence[i];
       if (treatment !== content_key) { treatments.push(treatment) }
-    });
+    }
 
     return (
       <div id="turf-map-image">

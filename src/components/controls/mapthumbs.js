@@ -68,11 +68,12 @@ class TreatmentMapThumbnails extends React.Component {
       return (
         <div className="turf-map-thumbnails">
            { groups.map( function(group,g) {
+              let row_key = 'mapthumbs-row-' + g;
               return (
-                <div className="turf-thumbnail-row">
+                <div className="turf-thumbnail-row" key={row_key}>
                 { group.map( function(the_date,i) {
-                  let key_string = 'mapthumb' + the_date.format('YMMDD');
-                  return <TreatmentMapThumbnail key={key_string} the_date={the_date} treatment={treatment}/>;
+                  let thmb_key = 'mapthumb' + the_date.format('YMMDD');
+                  return <TreatmentMapThumbnail key={thmb_key} the_date={the_date} treatment={treatment}/>;
                   } )
                 }
                 </div>

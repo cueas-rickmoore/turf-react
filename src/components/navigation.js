@@ -20,10 +20,7 @@ class InactiveMenuTitle extends React.Component {
 @observer
 class DiseaseRiskMenu extends React.Component {
 
-  clickHandler(model_name) {
-    let content_keys = { component:"dashboard", contentGroup:'threats', contentModel:model_name };
-    this.props.stores.appstore.updateContentPane(content_keys);
-  }
+  clickHandler(uri) { this.props.stores.appstore.uriToContentPane(uri); }
 
   render() {
     console.log("DiseaseRiskMenu.render active = " + this.props.active)
@@ -33,10 +30,10 @@ class DiseaseRiskMenu extends React.Component {
         <div key="disease-active" className="turf-active-menu">
           <div className="turf-active-menu-title">Disease Risk</div>
           <div id="turf-diseases" className="turf-active-menu-items">
-            <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, "anthrac")}>Anthracnose</button>
-            <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, "bpatch")}>Brown Patch</button>
-            <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dspot")}>Dollarspot</button>
-            <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, "pblight")}>Pythium Blight</button>
+            <button id="anthrac" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard/threats/anthrac")}>Anthracnose</button>
+            <button id="bpatch" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard/threats/bpatch")}>Brown Patch</button>
+            <button id="dspot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard/threats/dspot")}>Dollarspot</button>
+            <button id="pblight" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard/threats/pblight")}>Pythium Blight</button>
           </div>
         </div>
       );
@@ -54,27 +51,18 @@ class DiseaseRiskMenu extends React.Component {
 @inject("stores")
 @observer
 class TurfDevelopmentMenu extends React.Component {
-  
-  clickHandler(content_path) {
-    let content_keys = { };
-    let content = content_path.split('.');
-    if (content.length === 3) {
-        content_keys = { component:content[0], contentGroup:content[1], contentModel:content[2], contentKey:null };
-    } else {
-        content_keys = { component:content[0], contentGroup:content[1], contentModel:content[2], contentKey:content[3] };
-    }
-    this.props.stores.appstore.updateContentPane(content_keys);
-  }
+
+  clickHandler(uri) { this.props.stores.appstore.uriToContentPane(uri); }
 
   render() {
     return (
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-development" className="turf-nav-items">
-          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard.controls.dandelion")}>Dandelion Recommendations</button>
-          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard.controls.seedhead")}>Seedhead Recommendations</button>
-          <button id="gdd32-last7days" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps.external.gdd32.last7days")}>7 Day GDD 32°F Accumulation</button>
-          <button id="gdd32-forecast" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps.external.gdd32.forecast")}>Forecast GDD 32°F Accumulation</button>
+          <button id="dandelion" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard/controls/dandelion")}>Dandelion Recommendations</button>
+          <button id="seedhead" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard/controls/seedhead")}>Seedhead Recommendations</button>
+          <button id="gdd32-last7days" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd32/last7days")}>7 Day GDD 32°F Accumulation</button>
+          <button id="gdd32-forecast" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd32/forecast")}>Forecast GDD 32°F Accumulation</button>
         </div>
       </div>
       );
@@ -86,24 +74,20 @@ class TurfDevelopmentMenu extends React.Component {
 @observer
 class TurfGDD50Menu extends React.Component {
   
-  clickHandler(map_type) {
-    let content = map_type.split('.')
-    let content_keys = { component:"maps", contentGroup:'external', contentModel:content[0], contentKey:content[1] };
-    this.props.stores.appstore.updateContentPane(content_keys);
-  }
+  clickHandler(uri) { this.props.stores.appstore.uriToContentPane(uri); }
 
   render() {
     return (
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-development" className="turf-nav-items">
-          <button id="gdd50-last7days" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.last7days")}>7 Day GDD 50°F Accumulation</button>
-          <button id="gdd50-forecast" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.forecast")}>Forecast GDD 50°F Accumulation</button>
-          <button id="gdd50-season" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.season")}>GDD 50°F Accumulation since March 15</button>
-          <button id="gdd50-diffdays" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.diffdays")}>GDD 50 Difference over last year (days)</button>
-          <button id="gdd50-diffgdd" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.diffgdd")}>GDD 50 Difference over last year (GDD)</button>
-          <button id="gdd50-normdiffdays" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.normdiffdays")}>GDD 50 Difference from "normal" (days)</button>
-          <button id="gdd50-normdiffgdd" className="turf-nav-button" onClick={this.clickHandler.bind(this, "gdd50.normdiffgdd")}>GDD 50 Difference from "normal" (GDD)</button>
+          <button id="gdd50-last7days" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd50/last7days")}>7 Day GDD 50°F Accumulation</button>
+          <button id="gdd50-forecast" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd50/forecast")}>Forecast GDD 50°F Accumulation</button>
+          <button id="gdd50-season" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd50/season")}>GDD 50°F Accumulation since March 15</button>
+          <button id="gdd50-diffdays" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd50/diffdays")}>GDD 50 Difference over last year (days)</button>
+          <button id="gdd50-diffgdd" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd50/diffgdd")}>GDD 50 Difference over last year (GDD)</button>
+          <button id="gdd50-normdiffdays" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd50/normdiffdays")}>GDD 50 Difference from "normal" (days)</button>
+          <button id="gdd50-normdiffgdd" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/gdd50/normdiffgdd")}>GDD 50 Difference from "normal" (GDD)</button>
         </div>
       </div>
       );
@@ -114,23 +98,20 @@ class TurfGDD50Menu extends React.Component {
 @inject("stores")
 class TurfIrrigationMenu extends React.Component {
 
-  clickHandler(content) {
-    let content_keys = { component:"maps", contentGroup:'external', contentModel:'irrigate', contentKey:content };
-    this.props.stores.appstore.updateContentPane(content_keys);
-  }
+  clickHandler(uri) { this.props.stores.appstore.uriToContentPane(uri); }
 
   render() {
     return (
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-irrigation" className="turf-nav-items">
-          <button id="rainfall" className="turf-nav-button" onClick={this.clickHandler.bind(this, "rainfall")}>Last Week's Rainfall</button>
-          <button id="evapot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "evapot")}>Evapotranspiration</button>
-          <button id="moisdef" className="turf-nav-button" onClick={this.clickHandler.bind(this, "moisdef")}>Moisture Deficit Last 7 Days</button>
-          <button id="moisdefcst" className="turf-nav-button" onClick={this.clickHandler.bind(this, "moisdefcst")}>Moisture Deficit 3-Day Forecast</button>
-          <button id="soilmoist" className="turf-nav-button" onClick={this.clickHandler.bind(this, "soilmoist")}>USDA Topsoil Moisture - Currrent</button>
-          <button id="soilcomp5" className="turf-nav-button" onClick={this.clickHandler.bind(this, "soilcomp5")}>USDA Topsoil Moisture - Currrent vs 5-year Mean</button>
-          <button id="soilcomp10" className="turf-nav-button" onClick={this.clickHandler.bind(this, "soilcomp10")}>USDA Topsoil Moisture - Currrent vs 10-year Mean</button>
+          <button id="rainfall" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/irrigate/rainfall")}>Last Week's Rainfall</button>
+          <button id="evapot" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/irrigate/evapot")}>Evapotranspiration</button>
+          <button id="moisdef" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/irrigate/moisdef")}>Moisture Deficit Last 7 Days</button>
+          <button id="moisdefcst" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/irrigate/moisdefcst")}>Moisture Deficit 3-Day Forecast</button>
+          <button id="soilmoist" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/irrigate/soilmoist")}>USDA Topsoil Moisture - Currrent</button>
+          <button id="soilcomp5" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/irrigate/soilcomp5")}>USDA Topsoil Moisture - Currrent vs 5-year Mean</button>
+          <button id="soilcomp10" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/irrigate/soilcomp10")}>USDA Topsoil Moisture - Currrent vs 10-year Mean</button>
         </div>
       </div>
       );
@@ -142,26 +123,17 @@ class TurfIrrigationMenu extends React.Component {
 @observer
 class TurfTemperatureMenu extends React.Component {
 
-  clickHandler(content_type) {
-      let content_keys = { };
-      if (content_type === 'hstress') {
-        content_keys = { component:"dashboard", contentGroup:"threats", contentModel:"hstress", contentKey:null }
-      } else {
-        let content = content_type.split('.')
-        content_keys = { component:"maps", contentGroup:"external", contentModel:content[0], contentKey:content[1] }
-      }
-      this.props.stores.appstore.updateContentPane(content_keys);
-  }
+  clickHandler(uri) { this.props.stores.appstore.uriToContentPane(uri); }
 
   render() {
     return (
       <div className="turf-active-menu">
         <div className="turf-active-menu-title">{this.props.title}</div>
         <div id="turf-temperature" className="turf-nav-items">
-          <button id="hstress" className="turf-nav-button" onClick={this.clickHandler.bind(this, "hstress")}>Heat Stress Index</button>
-          <button id="frost" className="turf-nav-button" onClick={this.clickHandler.bind(this, "temperature.frost")}>Frost Potential</button>
-          <button id="tempdepart" className="turf-nav-button" onClick={this.clickHandler.bind(this, "temperature.departure")}>Temperature Departure</button>
-          <button id="soiltemp" className="turf-nav-button" onClick={this.clickHandler.bind(this, "temperature.soil2in")}>Soil Temperature</button>
+          <button id="hstress" className="turf-nav-button" onClick={this.clickHandler.bind(this, "dashboard/threats/hstress")}>Heat Stress Index</button>
+          <button id="frost" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/temperature/frost")}>Frost Potential</button>
+          <button id="tempdepart" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/temperature/departure")}>Temperature Departure</button>
+          <button id="soiltemp" className="turf-nav-button" onClick={this.clickHandler.bind(this, "maps/external/temperature/soil2in")}>Soil Temperature</button>
         </div>
       </div>
       );
@@ -249,16 +221,15 @@ class TurfNavigation extends React.Component {
     }
   }
   
-  homeClickHandler() {
-      let content_keys = { component:"home" };
-      this.props.stores.appstore.updateContentPane(content_keys);
-  }
+  homeClickHandler() { this.props.stores.appstore.uriToContentPane('home'); }
 
   render() {
     let selectedMenu = this.state.selectedMenu;
     console.log('NAVIGATION selectedMenu = ' + selectedMenu)
     console.log('NAVIGATION selected === disease : ' + (selectedMenu === "disease"))
     console.log('NAVIGATION selected !== disease : ' + (selectedMenu !== "disease"))
+
+    let cutt_logo_url = this.props.stores.appstore.logoUrl('CUTT')
 
     return (
       <div className="turf-navigation">
@@ -306,7 +277,7 @@ class TurfNavigation extends React.Component {
           </div>
           <div id="turf-shortcutt-content">
             <a href="http://www.nrcc.cornell.edu/industry/grass/ShCUTTOrder.pdf" target="_blank" rel="noopener noreferrer">
-            <img src="images/shortcutt.png" alt="ShortCutt logo"/><p>Click Here To Learn About ShortCUTT</p></a>
+            <img src={cutt_logo_url} alt="ShortCutt logo"/><p>Click Here To Learn About ShortCUTT</p></a>
             <p>An In-Season Weekly Management Tool For All Turfgrass Managers</p>
           </div>
 

@@ -1,9 +1,16 @@
 import React from 'react';
+import { inject } from 'mobx-react';
 
+@inject("stores")
 class NRCCFooter extends React.Component {
 
   render() {
-    return (
+
+   let noaa_logo_url = this.props.stores.appstore.logoUrl('NOAA');
+   let nrcc_logo_url = this.props.stores.appstore.logoUrl('NRCC');
+   let turf_logo_url = this.props.stores.appstore.logoUrl('TURF');
+
+   return (
       <div id="nrcc-footer">
         <div id="nrcc-footer-main">
           <div id="nrcc-footer-left">
@@ -15,15 +22,15 @@ class NRCCFooter extends React.Component {
           <div id="nrcc-footer-right">
             <div className="logo-1">
               <a href="http://turf.cals.cornell.edu" rel="noopener noreferrer" target="_blank">
-              <img className="logo-img" src="../images/CUTurfLogo.jpg" alt="Turfgrass Logo" /></a>
+              <img className="logo-img" src={turf_logo_url} alt="Turfgrass Logo" /></a>
             </div>
             <div className="logo-2">
               <a href="http://www.nrcc.cornell.edu" rel="noopener noreferrer" target="_blank">
-              <img className="nrcc-logo-img" src="../images/nrcc-logo-square.png" alt="NRCC Logo" /></a>
+              <img className="nrcc-logo-img" src={nrcc_logo_url} alt="NRCC Logo" /></a>
             </div>
             <div className="logo-3">
               <a href="https://www.ncdc.noaa.gov/customer-support/partnerships/regional-climate-centers" rel="noopener noreferrer" target="_blank">
-              <img className="logo-img" src="../images/noaa-rcc-logo.png" alt="RCC Logo" /></a>
+              <img className="logo-img" src={noaa_logo_url} alt="RCC Logo" /></a>
             </div>
           </div>
         </div>

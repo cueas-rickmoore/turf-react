@@ -2,7 +2,6 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 import TurfNavigation from './components/navigation.js';
-import TurfControlsDashboard from './components/controls/dashboard.js';
 import TurfHomeContentPane from './components/homepane.js';
 import TurfMapContentPane from './components/mappane.js';
 import TurfModelDashboard from './components/dashboard.js';
@@ -41,10 +40,13 @@ class App extends React.Component {
     console.log('\n\ncontentComponent = ' + appstore.contentComponent);
     console.log('    contentModel = ' + appstore.contentModel);
     console.log('      contentKey = ' + appstore.contentKey + '\n\n');
+    
+    let banner_url = this.props.stores.appstore.commonUrl('turf-banner.jpg');
+
     return (
       <div className="App">
         <header className="App-header">
-          <img src="images/turf-banner.jpg" className="App-banner" alt="Turf Banner" />
+          <img src={banner_url} className="App-banner" alt="Turf Banner" />
           <p className="App-title">Turf Grass Management</p>
         </header>
         <div id="App-content">
@@ -54,7 +56,8 @@ class App extends React.Component {
             { appstore.contentComponent === 'dashboard' &&
               datastore.data && <TurfModelDashboard />  }
             { appstore.contentComponent === 'maps' && <TurfMapContentPane /> }
-            { !root_components.includes(appstore.contentComponent) && <UnsupportedComponentType /> }
+            { !root_components.includes(appstore.contentComponent) &&
+              <UnsupportedComponentType /> }
             <div>&nbsp;</div>
           </div>
         </div>

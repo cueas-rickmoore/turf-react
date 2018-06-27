@@ -2,10 +2,10 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 @inject("stores")
-class ThreatDashboardThumbnail extends React.Component {
+class ThreatThumbnail extends React.Component {
   clickHandler(the_date, model) {
     this.props.stores.datestore.updateMapDate(the_date);
-    this.props.stores.appstore.updateContentPane({component:'maps', contentGroup:'threats', contentModel:model.name});
+    this.props.stores.appstore.uriToContentPane('maps/threats/' + model);
   }
 
   render() {
@@ -24,7 +24,7 @@ class ThreatDashboardThumbnail extends React.Component {
         url = url.replace(/CONTENTKEY/gi, content_key);
     }
     return(
-      <div key={'tmb' + date_string} className="thumb" onClick={this.clickHandler.bind(this, the_date, model)}>
+      <div key={'tmb' + date_string} className="thumb" onClick={this.clickHandler.bind(this, the_date, model.name)}>
         <img key={'tmbimg' + date_string} className="thumbnail" src={url} alt={alt} />
         <br/><span key={'tmblbl' + date_string} className="thumbnail-date">{label}</span>
       </div>
@@ -48,8 +48,8 @@ class ThreatDashboardThumbnails extends React.Component {
     return (
       <div className="turf-dashboard-thumbnails">
         { thumb_dates.map(function(the_date,i){
-          let key = 'thumbnail' + i;
-          return <ThreatDashboardThumbnail key={key} model={model} the_date={the_date} />;
+          let key = 'threats_thumb_' + i;
+          return <ThreatThumbnail key={key} model={model} the_date={the_date} />;
         }) }
       </div>
     )

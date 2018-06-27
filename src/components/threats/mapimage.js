@@ -1,6 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
+/*
 @inject("stores")
 class DashboardButton extends React.Component {
   clickHandler(model_name) {
@@ -15,7 +16,7 @@ class DashboardButton extends React.Component {
     return <span className="dashboard-view-button" onClick={this.clickHandler.bind(this, model.name)}>{text}</span>
   }
 }
-
+*/
 
 @inject("stores")
 @observer
@@ -42,11 +43,11 @@ class ThreatMapImage extends React.Component {
     return (
       <div id="turf-map-image">
         <img className="fullsizemap" src={url} alt={alt} />
-        <div className="content-below-map-image">
-          <DashboardButton />
-        </div>
       </div>
     )
+        /*<div className="content-below-map-image">
+          <DashboardButton />
+        </div>*/
   }
 }
 

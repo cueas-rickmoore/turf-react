@@ -1,20 +1,57 @@
 import { observable, action } from 'mobx';
-import axios from "axios";
 
 export default class AppStore {
-    stores;
+    common_url;
+    history;
+    logos;
     model_groups;
     root_data_url;
+    stopHistory;
+    stores;
     valid_components;
+
     constructor(appstores) {
+      this.common_url = '/app_data/common/';
       this.model_groups = ['controls','threats'];
       /* this.root_data_url = 'http://localhost:6969/app_data/YEAR/'; */
-      this.root_data_url = '/app_data/YEAR/';
+      this.root_data_url = '/app_data/NE/YEAR/';
       this.stores = appstores;
       this.valid_components = ['dashboard', 'home', 'maps',
                                'controlboard', 'controlmap', 'threatboard', 'threatmap', 
                                'externmap', 'controls', 'threats'];
+
+      this.history = appstores.history;
+      this.history.listen((h_location, h_action) => {
+        console.log('HISTORY LISTEN : ' + h_action + ' : ' + h_location.path)
+        console.log('                 ' + h_location.pathname)
+        console.log('                 ' + h_location.state)
+        if (h_location.pathname === 'home') {
+            this.updateContentPane(h_location.state)
+        } else {
+          if (h_location.state === 'undefinded') {
+            let params = h_location.pathname.split('/')
+            if (params[0] === 'app') {
+              let request = { component:params[1], contentGroup:params[2], contentModel:params[3], contentKey:null }
+              if (params.length > 4) { request.contentKey = params[4]; }
+              this.updateContentPane(request);
+            }
+          } else { this.updateContentPane(h_location.state) }
+        }
+      })
+      this.logos = {
+          CUTT: 'shortcutt.png',
+          NOAA: 'noaa-rcc-logo.png',
+          NRCC: 'nrcc-logo-square.png',
+          TURF: 'CUTurfLogo.jpg',
+      }
     }
+
+    commonUrl(uri) { return this.common_url + '/' + uri; }
+
+    @observable contentComponent = 'home';
+    @observable contentGroup = null;
+    @observable contentModel = null;
+    @observable contentKey = null;
 
     downloadModelContent(content_model) {
       let url_template = null;
@@ -28,19 +65,6 @@ export default class AppStore {
                             .replace('GRIDNODE', this.stores.location.node);
       console.log('Turf AppStore.downloadModelContent from url :\n    ' + url);
 
-      /*
-      axios.get(url, { mode:'cors',
-                       headers: {'Access-Control-Allow-Origin': 'localhost:3000',
-                                 'Content-Type': 'application/json'}
-               })
-           .then((response) => response.json())
-           .then((json) => {
-               console.log('Turf AppStore download complete ' + json)
-               this.updateModelContent(json);
-      });
-      window.fetch(url, { mode:'cors', headers: {'Access-Control-Allow-Origin': 'localhost:3000',
-                          'Content-Type': 'application/json'} } )
-      */
       window.fetch(url)
             .then((response) => response.json())
             .then((json) => {
@@ -49,16 +73,45 @@ export default class AppStore {
             });
     }
 
-    @observable contentComponent = 'home';
-    @observable contentGroup = null;
-    @observable contentModel = null;
-    @observable contentKey = null;
+    goHome() {
+        this.history.push('/app/home', {component:'home', contentGroup:null, contentModel:null, contentKey:null}) 
+    }
+
+    logoUrl(key) { return this.common_url + '/' + this.logos[key]; }
+
+    requestToContentPane(request) {
+      console.log('request :: ', request)
+      if (request.contentKey !== null) {
+        let uri = '/app/' + [request.component, request.contentGroup, request.contentModel, request.contentKey].join('/')
+        this.history.push(uri, request)
+      } else {
+        let uri = '/app/' + [request.component, request.contentGroup, request.contentModel].join('/')
+        this.history.push(uri, request)
+      }
+    }
+
+    uriToContentPane(uri) {
+      console.log('uriToContentPane :: ', uri)
+      let request = { };
+      if (uri === 'app' || uri === 'home') {
+        request = { component:'home', contentGroup:null, contentModel:null, contentKey:null };
+        this.history.push('/app', request)
+      } else {
+        let content = uri.split('/');
+        if (content.length === 3) {
+          request = { component:content[0], contentGroup:content[1], contentModel:content[2], contentKey:null };
+        } else {
+          request = { component:content[0], contentGroup:content[1], contentModel:content[2], contentKey:content[3] };
+        }
+        this.history.push('/app/' + uri, request)
+      }
+    }
 
     urlTemplate(model, data_type) {
       if (typeof model === 'string') {
         return this.root_data_url + this.props.stores.models.urlTemplate(model, data_type)
       } else { 
-          return this.root_data_url + model.urls[data_type];
+        return this.root_data_url + model.urls[data_type];
       }
     }
 
@@ -68,28 +121,38 @@ export default class AppStore {
       if (!this.valid_components.includes(request.component)) {
         throw new ReferenceError('"' + request.component + '" is not a valid component name.'); 
       }
+      if (request.component === 'home') {
 
-      if (request.contentGroup !== this.contentGroup) {
-        this.contentGroup = request.contentGroup;
-      }
+        this.contentKey = undefined;
+        this.contentModel = undefined;
+        this.contentGroup = undefined;
+        this.contentComponent = request.component;
 
-      if (request.contentModel !== this.contentModel) {
-        console.log('    initiating model content download for "' + request.contentModel);
-        this.contentModel = request.contentModel;
-        if (this.stores.models.isValidModel(this.contentModel)) {
-          this.stores.datastore.obliviate();
-          this.downloadModelContent(this.contentModel);
+      } else {
+        
+          if (request.contentGroup !== this.contentGroup) {
+          this.contentGroup = request.contentGroup;
+        }
+
+        if (request.contentModel !== this.contentModel) {
+          console.log('    initiating model content download for "' + request.contentModel);
+          this.contentModel = request.contentModel;
+          if (this.stores.models.isValidModel(this.contentModel)) {
+            this.stores.datastore.obliviate();
+            this.downloadModelContent(this.contentModel);
+          }
+        }
+
+        if (request.contentKey !== this.contentKey) {
+          this.contentKey = request.contentKey;
+        }
+
+        if (request.component !== this.contentComponent) {
+          console.log('    changing contentComponent ' + request.component); 
+          this.contentComponent = request.component;
         }
       }
 
-      if (request.contentKey !== this.contentKey) {
-        this.contentKey = request.contentKey;
-      }
-
-      if (request.component !== this.contentComponent) {
-        console.log('    changing contentComponent ' + request.component); 
-        this.contentComponent = request.component;
-      }
       console.log('Turf AppStore.updateContentPane completed');
     }
 

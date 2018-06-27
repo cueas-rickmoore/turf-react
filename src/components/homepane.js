@@ -4,10 +4,7 @@ import { inject } from 'mobx-react';
 @inject("stores")
 class HomePageMap extends React.Component {
 
-  clickHandler() {
-      let content_keys = { component:"dashboard", contentGroup:"threats", contentModel:this.props.model, contentKey:null };
-      this.props.stores.appstore.updateContentPane(content_keys);
-  }
+  clickHandler() { this.props.stores.appstore.uriToContentPane("dashboard/threats/" + this.props.model); }
 
   render() {
     console.log('HomePageMap.render model = ' + this.props.model)
