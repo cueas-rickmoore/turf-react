@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+//import axios from "axios";
 
 export default class AppStore {
     common_url;
@@ -11,7 +12,7 @@ export default class AppStore {
     valid_components;
 
     constructor(appstores) {
-      this.common_url = '/app_data/common/';
+      this.common_url = '/app_data/common';
       this.model_groups = ['controls','threats'];
       /* this.root_data_url = 'http://localhost:6969/app_data/YEAR/'; */
       this.root_data_url = '/app_data/NE/YEAR/';
@@ -22,13 +23,17 @@ export default class AppStore {
 
       this.history = appstores.history;
       this.history.listen((h_location, h_action) => {
-        console.log('HISTORY LISTEN : ' + h_action + ' : ' + h_location.path)
-        console.log('                 ' + h_location.pathname)
-        console.log('                 ' + h_location.state)
-        if (h_location.pathname === 'home') {
-            this.updateContentPane(h_location.state)
+        console.log('HISTORY LISTEN : ' + h_action)
+        console.log('                  h_location.path : ' + h_location.path)
+        console.log('              h_location.pathname : ' + h_location.pathname)
+        console.log('                 h_location.state : ' + h_location.state)
+        if (typeof h_location.state !== 'undefined') { 
+          console.log('       h_location.state.component : ' + h_location.state.component)
+        }
+        if (['/home', 'home', '/'].indexOf(h_location.pathname) > -1) {
+            this.updateContentPane({component:'home',});
         } else {
-          if (h_location.state === 'undefinded') {
+          if (typeof h_location.state === 'undefined') {
             let params = h_location.pathname.split('/')
             if (params[0] === 'app') {
               let request = { component:params[1], contentGroup:params[2], contentModel:params[3], contentKey:null }
@@ -56,15 +61,28 @@ export default class AppStore {
     downloadModelContent(content_model) {
       let url_template = null;
       if (content_model === null) {
-          url_template = this.root_data_url + this.stores.models.urlTemplate(this.content_model,'data');
+          url_template = this.root_data_url + this.stores.models.urlTemplate(this.contentModel,'data');
       } else { 
           url_template = this.root_data_url + this.stores.models.urlTemplate(content_model,'data');
       }
       /* let url_template = this.stores.models.urlTemplate(content_model,'data'); */
       let url = url_template.replace(new RegExp('YEAR', 'g'),this.stores.datestore.season.year.toString())
-                            .replace('GRIDNODE', this.stores.location.node);
+                            .replace('GRIDNODE', this.stores.locations.node);
       console.log('Turf AppStore.downloadModelContent from url :\n    ' + url);
 
+      /*
+      axios.get(url, { mode:'cors',
+                       headers: {'Access-Control-Allow-Origin': 'localhost:3000',
+                                 'Content-Type': 'application/json'}
+               })
+           .then((response) => response.json())
+           .then((json) => {
+               console.log('Turf AppStore download complete ' + json)
+               this.updateModelContent(json);
+      });
+      window.fetch(url, { mode:'cors', headers: {'Access-Control-Allow-Origin': 'localhost:3000',
+                          'Content-Type': 'application/json'} } )
+      */
       window.fetch(url)
             .then((response) => response.json())
             .then((json) => {
@@ -77,7 +95,8 @@ export default class AppStore {
         this.history.push('/app/home', {component:'home', contentGroup:null, contentModel:null, contentKey:null}) 
     }
 
-    logoUrl(key) { return this.common_url + '/' + this.logos[key]; }
+    imageUrl(image_uri) { return this.common_url + '/images/' + image_uri; }
+    logoUrl(key) { return this.imageUrl(this.logos[key]); }
 
     requestToContentPane(request) {
       console.log('request :: ', request)
@@ -157,11 +176,19 @@ export default class AppStore {
     }
 
     @action updateModelContent = (json) => {
+      console.log('Turf AppStore.updateModelContent :')
+      console.log('    json group/name : ' + json.group + ' / ' + json.name)
+      console.log('    isValidModel(json.name) : ' + this.stores.models.isValidModel(json.name))
       if (this.model_groups.includes(json.group) && this.stores.models.isValidModel(json.name)) {
+        console.log('    previous model : ' + this.contentModel)
         this.contentModel = json.name;
+        console.log('    new model : ' + this.contentModel)
         this.stores.models.changeDataModel(json.name);
+        console.log('    updating model dates')
         this.stores.datestore.updateModelDates(json);
+        console.log('    updating model data')
         this.stores.datastore.updateModelData(json);
+        console.log('PAGE DATA SHOULD BE UPDATED !!!')
       } else {
         console.log('Turf AppStore.updateModelContent : JSON FILE CONTENT ERROR');
         console.log('    received json for unknown data model "' + json.group + '.' + json.name + '"');

@@ -60,16 +60,18 @@ class ThreatColumnChart extends Component {
 
   render() {
     /* access the observables in the model and data stores */
-    const data_model = this.props.stores.models.model;
-    const risk_data = this.props.stores.datastore.dailyRisk
-    const model_dates = this.props.stores.datestore.modelDates;
-    const season = this.props.stores.datestore.seasonDates;
+    let data_model = this.props.stores.models.model;
+    // let risk_data = this.props.stores.datastore.dailyRisk
+    let datastore = this.props.stores.datastore;
+    let model_dates = this.props.stores.datestore.modelDates;
+    let season = this.props.stores.datestore.seasonDates;
 
-    let chartConfig = this.genChartConfig(data_model, risk_data.map(x => x + 1.0), model_dates, season);
+    // let chartConfig = this.genChartConfig(data_model, risk_data.map(x => x + 1.0), model_dates, season);
 
+    //    <ReactHighstock config={chartConfig} />
     return (
       <div id="dashboard-chart-container">
-        <ReactHighstock config={chartConfig} />
+        { datastore.dailyRisk && <ReactHighstock config={this.genChartConfig(data_model, datastore.dailyRisk.map(x => x + 1.0), model_dates, season)} /> }
       </div>
     );
   }

@@ -194,6 +194,7 @@ class LocationButton extends React.Component {
 
   clickHandler() {
     console.log("LocationButton.clickHanlder was called")
+    this.props.stores.locations.openMap();
   }
 
   render() {

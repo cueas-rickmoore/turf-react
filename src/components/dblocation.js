@@ -7,7 +7,7 @@ class DashboardLocation extends React.Component {
   render() {
     return (
       <div id="turf-dashboard-location">
-        <span className="location-address">{this.props.stores.location.address}</span>
+        <span className="location-address">{this.props.stores.locations.address}</span>
       </div>
     )
   }

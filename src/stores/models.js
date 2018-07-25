@@ -192,10 +192,13 @@ export default class TurfDataModels {
   @observable active_model = null;
   @observable model_name = null;
   @action changeDataModel = (model_name) => {
+     console.log('TurfDataModels.changeDataModel : ' + model_name)
+
      if (model_name !== this.model_name) {
          this.model_name = model_name;
          this.active_model = this.models[this.model_name];
-        }
+     }
+     console.log('    active_model : ' + this.model_name)
     }
   @computed get modelName() { return this.model_name }
   @computed get model() { return this.active_model }

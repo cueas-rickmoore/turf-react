@@ -38,7 +38,6 @@ class ThreatDashboardThumbnails extends React.Component {
 
   render() {
     let model = this.props.stores.models.model;
-
     let start_date = this.props.stores.datestore.firstThumbDate.clone();
     let thumb_dates = [start_date, ];
     for (let i=1; i < model.dashboard.thumbs.count; i++) {

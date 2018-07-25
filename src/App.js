@@ -1,5 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import scriptLoader from 'react-async-script-loader';
 
 import TurfNavigation from './components/navigation.js';
 import TurfHomeContentPane from './components/homepane.js';
@@ -7,6 +8,17 @@ import TurfMapContentPane from './components/mappane.js';
 import TurfModelDashboard from './components/dashboard.js';
 import NRCCFooter from './components/nrccfooter.js';
 import './App.css';
+
+import jQuery from 'jquery';
+import 'jquery-ui/themes/base/core.css';
+import 'jquery-ui/themes/base/theme.css';
+import 'jquery-ui/themes/base/button.css';
+import 'jquery-ui/themes/base/dialog.css';
+import 'jquery-ui/ui/core';
+import 'jquery-ui/ui/widgets/button';
+import 'jquery-ui/ui/widgets/dialog';
+import './styles/location-dialog.css';
+window.jQuery = jQuery;
 
 @inject("stores")
 class UnsupportedComponentType extends React.Component {
@@ -22,7 +34,11 @@ class UnsupportedComponentType extends React.Component {
   }
 }
 
+const HOST = 'https://maps.google.com/maps/api/js';
+const KEY = 'AIzaSyDv5pQYe9kRbolVUt0o8XSXSQl4g8BHrrQ';
+const URL_google_api = `${HOST}?key=${KEY}`;
 
+@scriptLoader([URL_google_api, 'app_data/common/js/location-dialog.js'])
 @inject("stores")
 @observer
 class App extends React.Component {
@@ -41,7 +57,7 @@ class App extends React.Component {
     console.log('    contentModel = ' + appstore.contentModel);
     console.log('      contentKey = ' + appstore.contentKey + '\n\n');
     
-    let banner_url = this.props.stores.appstore.commonUrl('turf-banner.jpg');
+    let banner_url = this.props.stores.appstore.imageUrl('turf-banner.jpg');
 
     return (
       <div className="App">
@@ -62,6 +78,8 @@ class App extends React.Component {
           </div>
         </div>
         <NRCCFooter />
+        <div className="location-map-dialog">
+        </div>
       </div>
     );
   }

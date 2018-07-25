@@ -30,7 +30,7 @@
 
   .turf-nav-menus {
     background-color: #ffffff;
-    border: none;
+    border: None;
     margin-left: 5%;
     margin-top: 0.25em;
     text-align: left;
@@ -41,8 +41,8 @@
   .turf-inactive-nav-menu,
   .turf-nav-menu {
     background-color: #ffffff;
-    margin: none;
-    padding: none ;
+    margin: 0;
+    padding: 0;
     width: 100%;
   }
 
@@ -161,7 +161,7 @@
 }
 
 @media only screen and (max-width: 720px) {
-  .turf-navigation { padding: none; }
+  .turf-navigation { padding: 0; }
 
   .turf-nav-menus {
     margin: 0 auto;
@@ -190,7 +190,7 @@
   #turf-nav-weather { font-size: 15px; }
 
   #turf-shortcutt-content {
-    margin: none;
+    margin: 0;
     text-align: center;
     max-width: 250px;
     margin-left: auto;
