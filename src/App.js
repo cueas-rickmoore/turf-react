@@ -38,7 +38,8 @@ const HOST = 'https://maps.google.com/maps/api/js';
 const KEY = 'AIzaSyDv5pQYe9kRbolVUt0o8XSXSQl4g8BHrrQ';
 const URL_google_api = `${HOST}?key=${KEY}`;
 
-@scriptLoader([URL_google_api, 'app_data/common/js/location-dialog.js'])
+const LOC_DIALOG_PATH = process.env.REACT_APP_HOME_URL + '/app_data/common/js/location-dialog.js';
+@scriptLoader([URL_google_api, LOC_DIALOG_PATH])
 @inject("stores")
 @observer
 class App extends React.Component {

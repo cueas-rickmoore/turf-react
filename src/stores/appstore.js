@@ -21,6 +21,8 @@ export default class AppStore {
                                'controlboard', 'controlmap', 'threatboard', 'threatmap', 
                                'externmap', 'controls', 'threats'];
 
+
+      
       this.history = appstores.history;
       this.history.listen((h_location, h_action) => {
         console.log('HISTORY LISTEN : ' + h_action)
@@ -109,20 +111,48 @@ export default class AppStore {
       }
     }
 
+    requestToUri(request) {
+      if (request.component === 'home') {
+          return 'home';
+      } else { 
+        if (request.contentKey !== null) {
+           return [request.component, request.contentGroup, request.contentModel, request.contentKey].join('/')
+        } else {
+           return [request.component, request.contentGroup, request.contentModel].join('/')
+        }
+      }
+    }
+
     uriToContentPane(uri) {
       console.log('uriToContentPane :: ', uri)
-      let request = { };
       if (uri === 'app' || uri === 'home') {
-        request = { component:'home', contentGroup:null, contentModel:null, contentKey:null };
+        let request = { component:'home', contentGroup:null, contentModel:null, contentKey:null };
+        this.history.push('/app', request)
+      } else { this.history.push('/app/' + uri, this.uriToRequest(uri)); }
+      /*
+      if (uri === 'app' || uri === 'home') {
+        let request = { component:'home', contentGroup:null, contentModel:null, contentKey:null };
         this.history.push('/app', request)
       } else {
         let content = uri.split('/');
-        if (content.length === 3) {
-          request = { component:content[0], contentGroup:content[1], contentModel:content[2], contentKey:null };
-        } else {
-          request = { component:content[0], contentGroup:content[1], contentModel:content[2], contentKey:content[3] };
-        }
+        let request = { component:content[0], contentGroup:content[1], contentModel:content[2] };
+        if (content.length === 3) { request['contentKey'] = null;
+        } else { request['contentKey'] = content[3]; }
         this.history.push('/app/' + uri, request)
+      }
+      */
+    }
+
+    uriToRequest(uri) {
+      if (uri === 'app' || uri === 'home' ) {
+          return {component:'home', contentGroup:null, contentModel:null, contentKey:null};
+      } else {
+        let content = uri.split('/');
+        let request =  { component:content[0], contentGroup:content[1], contentModel:content[2] }
+        if (content.length === 4) { 
+            request['contentKey'] = content[3];
+        } else { request['contentKey'] = null; }
+        return request;
       }
     }
 
@@ -171,6 +201,8 @@ export default class AppStore {
           this.contentComponent = request.component;
         }
       }
+
+      localStorage.setItem('last_visited', this.requestToUri(request));
 
       console.log('Turf AppStore.updateContentPane completed');
     }

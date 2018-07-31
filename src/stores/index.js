@@ -28,15 +28,22 @@ class Stores {
         this.data_root_url = process.env.REACT_APP_DATA_URL;
         this.history = history;
 
-        //this.storage_manager = new StorageManager();
+        console.log('App CONSTRUCTOR : checking last visited')
+        let ignore = ['app','home',null];
+        let last_visited = localStorage.getItem('last_visited');
+        console.log('    last_visited = ' + last_visited)
+        console.log('    ignore.indexOf(last_visited) = ' + ignore.indexOf(last_visited))
 
         this.datestore = new TurfDateStore(this);
         this.models = new TurfDataModels();
+        this.text = new TurfTextStore();
         this.external = new TurfExternalMapStore();
         this.locations = new TurfLocationStore(this);
-        this.text = new TurfTextStore();
         this.datastore = new TurfDataStore(this);
         this.appstore = new AppStore(this);
+        if (ignore.indexOf(last_visited) === -1) {
+            this.appstore.uriToContentPane(last_visited);
+        }
     }
 }
 

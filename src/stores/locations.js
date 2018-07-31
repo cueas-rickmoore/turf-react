@@ -118,12 +118,11 @@ export default class TurfLocationStore {
         lat: 42.458, lon: -76.458, node: '76458-42458',
       }
 
-      // this.location_manager = stores.storage_manager;
       this.location_manager = new LocalStorageManager();
       this.location_cache = this.location_manager.locations();
       console.log('TurfLocationStore.location_cache : ' + typeof this.location_cache);
-      console.log('TurfLocationStore.location_cache.keys : ' + Object.keys(this.location_cache).toString());
-      console.log('TurfLocationStore.location.selectedID : ' + this.location_manager.selectedId());
+      //console.log('TurfLocationStore.location_cache.keys : ' + Object.keys(this.location_cache).toString());
+      //console.log('TurfLocationStore.location.selectedID : ' + this.location_manager.selectedId());
       if (this.location_cache === null) {
         this.location_cache = { 'default': this.default_location, }
         this.selected = 'default';
@@ -236,8 +235,11 @@ export default class TurfLocationStore {
 
       // check whether a different location was selected 
       if (this.select(context.selected)) {
-        console.log('TurfLocationStore.update requesting data download')
-        this.stores.appstore.downloadModelContent(null);
+        let content_model = this.stores.appstore.contentModel;
+        if (content_model !== null && content_model !== typeof undefined) {
+            console.log('TurfLocationStore.update requesting data download')
+            this.stores.appstore.downloadModelContent(null);
+        }
         console.log('TurfLocationStore.update calling location_manager.setSelected')
         this.location_manager.setSelected(context.selected);
       }
