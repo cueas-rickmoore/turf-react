@@ -6,23 +6,26 @@ export default class AppStore {
     history;
     logos;
     model_groups;
-    root_data_url;
+    data_root_url;
     stopHistory;
     stores;
     valid_components;
 
     constructor(appstores) {
-      this.common_url = '/app_data/common';
+      console.log('\n\nINITIALIZING AppStore :')
+      this.common_url = appstores.app_common_url;
+      console.log('    common_url : ' + this.common_url)
+
       this.model_groups = ['controls','threats'];
-      /* this.root_data_url = 'http://localhost:6969/app_data/YEAR/'; */
-      this.root_data_url = '/app_data/NE/YEAR/';
+      /* this.data_root_url = 'http://localhost:6969/app_data/YEAR/'; */
+      // this.data_root_url = '/app_data/NE/YEAR/';
+      this.data_root_url = appstores.data_root_url + '/NE/YEAR/';
+      console.log('    data_root_url : ' + this.data_root_url)
       this.stores = appstores;
       this.valid_components = ['dashboard', 'home', 'maps',
                                'controlboard', 'controlmap', 'threatboard', 'threatmap', 
                                'externmap', 'controls', 'threats'];
 
-
-      
       this.history = appstores.history;
       this.history.listen((h_location, h_action) => {
         console.log('HISTORY LISTEN : ' + h_action)
@@ -51,6 +54,7 @@ export default class AppStore {
           NRCC: 'nrcc-logo-square.png',
           TURF: 'CUTurfLogo.jpg',
       }
+      console.log('AppStore ready for buiness\n\n')
     }
 
     commonUrl(uri) { return this.common_url + '/' + uri; }
@@ -61,13 +65,15 @@ export default class AppStore {
     @observable contentKey = null;
 
     downloadModelContent(content_model) {
+      console.log('CHASING MODEL URL TEMPLATE : ' + this.data_root_url)
       let url_template = null;
       if (content_model === null) {
-          url_template = this.root_data_url + this.stores.models.urlTemplate(this.contentModel,'data');
+          url_template = this.data_root_url + this.stores.models.urlTemplate(this.contentModel,'data');
       } else { 
-          url_template = this.root_data_url + this.stores.models.urlTemplate(content_model,'data');
+          url_template = this.data_root_url + this.stores.models.urlTemplate(content_model,'data');
       }
       /* let url_template = this.stores.models.urlTemplate(content_model,'data'); */
+      console.log('ROOT MODEL URL TEMPLATE : ' + url_template)
       let url = url_template.replace(new RegExp('YEAR', 'g'),this.stores.datestore.season.year.toString())
                             .replace('GRIDNODE', this.stores.locations.node);
       console.log('Turf AppStore.downloadModelContent from url :\n    ' + url);
@@ -157,10 +163,11 @@ export default class AppStore {
     }
 
     urlTemplate(model, data_type) {
+      console.log('CHASING ROOT URL : ' + this.data_root_url)
       if (typeof model === 'string') {
-        return this.root_data_url + this.props.stores.models.urlTemplate(model, data_type)
+        return this.data_root_url + this.props.stores.models.urlTemplate(model, data_type)
       } else { 
-        return this.root_data_url + model.urls[data_type];
+        return this.data_root_url + model.urls[data_type];
       }
     }
 

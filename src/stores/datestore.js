@@ -173,7 +173,10 @@ export default class TurfDateStore {
     @observable map_date = null;
     @computed get mapDate() { return this.map_date }
 
-    @action updateMapDate(new_date) { this.map_date = new_date.clone() }
+    @action updateMapDate(new_date) {
+        console.log('UPDATING MAP DATE TO :', new_date)
+        this.map_date = new_date.clone()
+    }
 
 }
 

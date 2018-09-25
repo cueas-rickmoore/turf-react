@@ -39,6 +39,7 @@ const KEY = 'AIzaSyDv5pQYe9kRbolVUt0o8XSXSQl4g8BHrrQ';
 const URL_google_api = `${HOST}?key=${KEY}`;
 
 const LOC_DIALOG_PATH = process.env.REACT_APP_COMMON_URL + '/js/location-dialog.js';
+console.log('LOC_DIALOG_PATH = ' + LOC_DIALOG_PATH)
 @scriptLoader([URL_google_api, LOC_DIALOG_PATH])
 @inject("stores")
 @observer

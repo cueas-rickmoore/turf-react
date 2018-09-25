@@ -24,11 +24,19 @@ class Stores {
     data_root_url;
 
     constructor(history) {
-        this.app_root_url = process.env.REACT_APP_HOME_URL;
-        this.data_root_url = process.env.REACT_APP_DATA_URL;
+        console.log('SRC/STORES/INDEX.constructor() :')
+        console.log('    process.env.REACT_APP_COMMON_URL = ' + process.env.REACT_APP_COMMON_URL)
+        this.app_common_url = process.env.REACT_APP_COMMON_URL;
+        console.log('    this.app_common_url = ' + this.app_common_url)
+        this.app_root_url = process.env.REACT_APP_ROOT_URL;
+        console.log('    process.env.REACT_APP_ROOT_URL = ' + process.env.REACT_APP_DATA_URL)
+        console.log('    this.app_root_url = ' + this.app_root_url)
+        this.data_root_url = process.env.REACT_APP_DATA_URL
+        console.log('    process.env.REACT_APP_DATA_URL = ' + process.env.REACT_APP_DATA_URL)
+        console.log('    this.data_root_url = ' + this.data_root_url)
         this.history = history;
 
-        console.log('App CONSTRUCTOR : checking last visited')
+        console.log('App Stores : checking last visited')
         let ignore = ['app','home',null];
         let last_visited = localStorage.getItem('last_visited');
         console.log('    last_visited = ' + last_visited)
